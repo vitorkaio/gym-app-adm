@@ -20,18 +20,18 @@ export interface Info {
 }
 
 class User {
-  private _id: string = '';
+  private __id: string = '';
   private _username: string = '';
-  private _info?: Info;
+  private _info!: Info;
   private _create_at: string = '';
   private _perfil: string = '';
   private _trainings: Training[] = [];
 
-  public get id(): string {
-    return this._id;
+  public get _id(): string {
+    return this.__id;
   }
-  public set id(value: string) {
-    this._id = value;
+  public set _id(value: string) {
+    this.__id = value;
   }
 
   public get username(): string {
