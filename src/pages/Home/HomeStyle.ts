@@ -3,8 +3,11 @@ import Colors from 'components/styles/Colors';
 
 export const Container = styled.View`
   flex: 1;
-  justify-content: center;
-  align-items: center;
+  background-color: ${Colors.content_color};
+`;
+
+export const Content = styled.View`
+  flex: 1;
 `;
 
 export const Text = styled.Text`

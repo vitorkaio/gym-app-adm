@@ -4,8 +4,8 @@ enum Colors {
   warning_color = '#ff6d00',
   error_color = '#f44336',
   info_color = '#448aff',
-  text_color = '#303030',
-  content_color = '#424242',
+  text_color = '#fff',
+  content_color = '#303030',
 }
 
 export default Colors;
