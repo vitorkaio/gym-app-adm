@@ -16,7 +16,7 @@ const Usericon = require('components/styles/assets/user.png');
 
 interface DispatchProps {
   item: User;
-  select: Function;
+  select: (user: User) => void;
 }
 
 const RenderItemData: React.FC<DispatchProps> = props => {

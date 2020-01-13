@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators, Dispatch} from 'redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -11,17 +11,33 @@ import Header from 'components/Header/Header';
 import Colors from 'components/styles/Colors';
 import List from './List/List';
 import User from 'models/User';
+import Add from 'components/Add/Add';
+import AddUserModal from './AddUserModal/AddUserModal';
 
 type Props = StateProps & DispatchProps;
 
 const Home: React.FC<Props> = props => {
   const {usersRequest, gymReducer} = props;
+  const [visibleModalUser, setVisibleModalUser] = useState(false);
 
   useEffect(() => {
     usersRequest();
   }, [usersRequest]);
 
+  const addUserNavigate = () => {
+    toggleVisibleModalUser();
+  };
+
+  const infoUserNavigate = (user: User) => {
+    console.log(user);
+  };
+
+  const toggleVisibleModalUser = () => {
+    setVisibleModalUser(!visibleModalUser);
+  };
+
   const {users, users_loading} = gymReducer;
+  console.log(visibleModalUser);
 
   return (
     <Container>
@@ -33,9 +49,16 @@ const Home: React.FC<Props> = props => {
         {users_loading ? (
           <Text>Carregando...</Text>
         ) : (
-          <List data={users} select={(user: User) => console.log(user)} />
+          <List data={users} select={infoUserNavigate} />
         )}
       </Content>
+      <Add onPressHandler={addUserNavigate} />
+      {visibleModalUser ? (
+        <AddUserModal
+          visibleModalUser={visibleModalUser}
+          toggleModalUser={toggleVisibleModalUser}
+        />
+      ) : null}
     </Container>
   );
 };
