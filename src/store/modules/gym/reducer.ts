@@ -6,6 +6,10 @@ const INITIAL_STATE: GymState = {
   users: [],
   users_loading: false,
   users_error: false,
+
+  create_user_msg: '',
+  create_user_loading: false,
+  create_user_error: false,
 };
 
 const gymReducer: Reducer<GymState> = produce(
@@ -28,6 +32,29 @@ const gymReducer: Reducer<GymState> = produce(
         draft.users = [];
         draft.users_loading = false;
         draft.users_error = false;
+        break;
+
+      case GymTypes.CREATE_USER_REQUEST:
+        draft.create_user_loading = true;
+        draft.create_user_error = false;
+        break;
+
+      case GymTypes.CREATE_USER_SUCCESS:
+        draft.create_user_msg = payload.msg;
+        draft.create_user_loading = false;
+        draft.create_user_error = false;
+        break;
+
+      case GymTypes.CREATE_USER_ERROR:
+        draft.create_user_msg = payload.err;
+        draft.create_user_loading = false;
+        draft.create_user_error = true;
+        break;
+
+      case GymTypes.CREATE_USER_RESET:
+        draft.create_user_msg = '';
+        draft.create_user_loading = false;
+        draft.create_user_error = false;
         break;
 
       default:
