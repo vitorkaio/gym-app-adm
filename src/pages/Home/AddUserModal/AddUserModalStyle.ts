@@ -6,10 +6,22 @@ export const Container = styled.View`
   background-color: ${Colors.content_color};
 `;
 
+export const Modal = styled.Modal``;
+
+export const TouchableOpacity = styled.TouchableOpacity``;
+
 export const Content = styled.View`
   flex: 1;
 `;
 
-export const Modal = styled.Modal``;
+export const Forms = styled.View`
+  flex: 1;
+  justify-content: space-around;
+  align-items: stretch;
+`;
 
-export const TouchableOpacity = styled.TouchableOpacity``;
+export const ImageInput = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;

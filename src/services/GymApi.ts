@@ -15,7 +15,6 @@ class GymApi {
     try {
       const res: AxiosResponse<ResData> = await axios.get(`${URL}/users`);
       const user: User[] = res.data.data as User[];
-      console.log(user);
       return user;
     } catch (error) {
       throw error;

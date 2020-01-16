@@ -1,4 +1,6 @@
 import User from 'models/User';
+import {Action} from 'redux';
+import {CreateUser} from 'models/TypesAux';
 
 /**
  * Action types
@@ -22,6 +24,12 @@ export interface GymState {
   create_user_msg: string;
   create_user_loading: boolean;
   create_user_error: boolean;
+}
+
+export interface CreateUserAction extends Action {
+  payload: {
+    newUser: CreateUser;
+  };
 }
 
 /**

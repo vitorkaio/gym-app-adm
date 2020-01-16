@@ -13,8 +13,8 @@ export const userError = () => action(GymTypes.USER_ERROR);
 // CREATE USER
 export const createUserRequest = (newUser: CreateUser) =>
   action(GymTypes.CREATE_USER_REQUEST, {newUser});
-export const createUserSuccess = (msg: string) =>
-  action(GymTypes.CREATE_USER_SUCCESS, {msg});
+export const createUserSuccess = (msg: string, users: User[]) =>
+  action(GymTypes.CREATE_USER_SUCCESS, {msg, users});
 export const createUserError = (err: string) =>
   action(GymTypes.CREATE_USER_ERROR, {err});
 export const createUserReset = () => action(GymTypes.CREATE_USER_RESET);

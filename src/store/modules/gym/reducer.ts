@@ -41,6 +41,7 @@ const gymReducer: Reducer<GymState> = produce(
 
       case GymTypes.CREATE_USER_SUCCESS:
         draft.create_user_msg = payload.msg;
+        draft.users = payload.users;
         draft.create_user_loading = false;
         draft.create_user_error = false;
         break;

@@ -22,6 +22,7 @@ export interface Info {
 class User {
   private __id: string = '';
   private _username: string = '';
+  private _password: string = '';
   private _info!: Info;
   private _create_at: string = '';
   private _perfil: string = '';
@@ -39,6 +40,13 @@ class User {
   }
   public set username(value: string) {
     this._username = value;
+  }
+
+  public get password(): string {
+    return this._password;
+  }
+  public set password(value: string) {
+    this._password = value;
   }
 
   public get info(): Info {

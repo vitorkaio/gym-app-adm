@@ -13,11 +13,12 @@ import List from './List/List';
 import User from 'models/User';
 import Add from 'components/Add/Add';
 import AddUserModal from './AddUserModal/AddUserModal';
+import {CreateUser} from 'models/TypesAux';
 
 type Props = StateProps & DispatchProps;
 
 const Home: React.FC<Props> = props => {
-  const {usersRequest, gymReducer} = props;
+  const {usersRequest, gymReducer, createUserRequest, createUserReset} = props;
   const [visibleModalUser, setVisibleModalUser] = useState(false);
 
   useEffect(() => {
@@ -36,8 +37,17 @@ const Home: React.FC<Props> = props => {
     setVisibleModalUser(!visibleModalUser);
   };
 
-  const {users, users_loading} = gymReducer;
-  console.log(visibleModalUser);
+  const createUserHandler = (newUser: CreateUser) => {
+    createUserRequest(newUser);
+  };
+
+  const {
+    users,
+    users_loading,
+    create_user_loading,
+    create_user_msg,
+    create_user_error,
+  } = gymReducer;
 
   return (
     <Container>
@@ -57,6 +67,11 @@ const Home: React.FC<Props> = props => {
         <AddUserModal
           visibleModalUser={visibleModalUser}
           toggleModalUser={toggleVisibleModalUser}
+          createUserRequest={createUserHandler}
+          createUserReset={createUserReset}
+          createUserLoading={create_user_loading}
+          createUserMsg={create_user_msg}
+          createUserErr={create_user_error}
         />
       ) : null}
     </Container>
