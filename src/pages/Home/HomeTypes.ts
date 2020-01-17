@@ -3,9 +3,9 @@ import {NavigationStackProp} from 'react-navigation-stack';
 import User from 'models/User';
 
 export interface StateProps {
-  usersLoading: boolean;
-  users: User[];
-  usersError: boolean;
+  usersLoadingData: boolean;
+  usersData: User[];
+  usersErrorData: boolean;
 
   createUserLoadingData: boolean;
   createUserMsgData: string;

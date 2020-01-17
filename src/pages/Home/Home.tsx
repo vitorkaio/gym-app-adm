@@ -22,8 +22,8 @@ type Props = StateProps & DispatchProps;
 const Home: React.FC<Props> = props => {
   const {
     usersRequest,
-    users,
-    usersLoading,
+    usersData,
+    usersLoadingData,
     createUserLoadingData,
     createUserMsgData,
     createUserErrorData,
@@ -45,7 +45,6 @@ const Home: React.FC<Props> = props => {
     const shareDatas = ShareDatas.getInstance();
     shareDatas.userSelected = user;
     navigation.navigate('InfoUser');
-    console.log(user);
   };
 
   const toggleVisibleModalUser = () => {
@@ -65,10 +64,10 @@ const Home: React.FC<Props> = props => {
         <Icon name="magnify" size={25} color={Colors.primary_color} />
       </Header>
       <Content>
-        {usersLoading ? (
+        {usersLoadingData ? (
           <LoadingDialog title="Carregando Usuários" />
         ) : (
-          <List data={users} select={infoUserNavigate} />
+          <List data={usersData} select={infoUserNavigate} />
         )}
       </Content>
       <Add onPressHandler={addUserNavigate} />
@@ -88,9 +87,9 @@ const Home: React.FC<Props> = props => {
 };
 
 const mapStateToProps = (state: ApplicationState) => ({
-  usersLoading: state.gymReducer.users_loading,
-  users: state.gymReducer.users,
-  usersError: state.gymReducer.users_error,
+  usersLoadingData: state.gymReducer.users_loading,
+  usersData: state.gymReducer.users,
+  usersErrorData: state.gymReducer.users_error,
   createUserLoadingData: state.gymReducer.create_user_loading,
   createUserMsgData: state.gymReducer.create_user_msg,
   createUserErrorData: state.gymReducer.create_user_error,

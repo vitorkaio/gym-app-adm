@@ -13,6 +13,8 @@ import Colors from 'components/styles/Colors';
 import {DispatchProps, StateProps} from './InfoUserTypes';
 import ConfirmDialog from 'components/Dialogs/Confirm/ConfirmDialog';
 import LoadingDialog from 'components/Dialogs/Loading/LoadingDialog';
+import List from './List/List';
+import {Training} from 'models/User';
 
 type Props = DispatchProps & StateProps;
 
@@ -40,6 +42,10 @@ const InfoUser: React.FC<Props> = props => {
     }
   };
 
+  const infoTrainingNavigate = (training: Training) => {
+    console.log(training);
+  };
+
   useEffect(() => {
     if (removeUserSuccessData) {
       navigateGoBack();
@@ -49,6 +55,7 @@ const InfoUser: React.FC<Props> = props => {
   const shareDatas = ShareDatas.getInstance();
   const username = shareDatas.userSelected.username;
   const id = shareDatas.userSelected._id;
+  const trainings = shareDatas.userSelected.trainings;
   return (
     <Container>
       <Header title={username}>
@@ -61,6 +68,7 @@ const InfoUser: React.FC<Props> = props => {
         {null}
       </Header>
       <Content>
+        <List data={trainings} select={infoTrainingNavigate} />
         {toggleConfim && (
           <ConfirmDialog
             title="Deletar"

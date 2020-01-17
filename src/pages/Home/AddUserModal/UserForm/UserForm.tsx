@@ -124,7 +124,6 @@ const UserForms: React.FC<Props> = props => {
   }, [username, password, name]);
 
   const submit = useCallback(() => {
-    console.log(username.error, password.error, name.error);
     if (
       username.error === false &&
       password.error === false &&
