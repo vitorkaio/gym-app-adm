@@ -5,7 +5,6 @@ import {Container, Forms, InputData} from './UserFormStyle';
 import Input from 'components/Input/Input';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import produce from 'immer';
-import Loading from 'components/ui/Loading';
 import {DispatchProps, State, InputDataType} from './UserFormType';
 import {CreateUser} from 'models/TypesAux';
 
@@ -33,6 +32,7 @@ const UserForms: React.FC<Props> = props => {
   const [validForm, setValidForm] = useState(false);
 
   useEffect(() => {
+    console.log(props.createUserError);
     if (props.createUserError) {
       const nextData = produce(username, draft => {
         draft.error = true;
@@ -91,7 +91,6 @@ const UserForms: React.FC<Props> = props => {
       valid = false;
       setUsername(nextData);
     }
-
     if (password.data!.trim().length === 0) {
       const nextData = produce(password, draft => {
         draft.error = true;
@@ -125,6 +124,7 @@ const UserForms: React.FC<Props> = props => {
   }, [username, password, name]);
 
   const submit = useCallback(() => {
+    console.log(username.error, password.error, name.error);
     if (
       username.error === false &&
       password.error === false &&
@@ -193,11 +193,7 @@ const UserForms: React.FC<Props> = props => {
           </InputData>
         </Forms>
       </KeyboardAwareScrollView>
-      {props.loading ? (
-        <Loading size="large" />
-      ) : (
-        <FooterButton clickHandler={validateForm} />
-      )}
+      <FooterButton clickHandler={validateForm} />
     </Container>
   );
 };

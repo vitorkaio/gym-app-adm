@@ -17,6 +17,7 @@ class GymApi {
       const user: User[] = res.data.data as User[];
       return user;
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }
@@ -26,6 +27,18 @@ class GymApi {
       const res: AxiosResponse<ResData> = await axios.post(
         `${URL}/users`,
         newUser,
+      );
+      const user: User = res.data.data as User;
+      return user;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async removeUser(id: string): Promise<User> {
+    try {
+      const res: AxiosResponse<ResData> = await axios.delete(
+        `${URL}/users/${id}`,
       );
       const user: User = res.data.data as User;
       return user;

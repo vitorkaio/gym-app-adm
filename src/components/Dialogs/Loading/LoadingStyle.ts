@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import Colors from 'components/styles/Colors';
 
 export const Container = styled.View`
   position: absolute;
@@ -15,10 +16,12 @@ export const Content = styled.View`
   border-radius: 5;
   justify-content: center;
   align-items: center;
+  background-color: ${Colors.content_color};
 `;
 
 export const Title = styled.Text`
   margin-top: 15;
   font-size: 15;
   font-weight: bold;
+  color: ${Colors.primary_color};
 `;

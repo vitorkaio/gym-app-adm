@@ -10,6 +10,11 @@ const INITIAL_STATE: GymState = {
   create_user_msg: '',
   create_user_loading: false,
   create_user_error: false,
+
+  remove_user_success: false,
+  remove_user_loading: false,
+  remove_user_error: false,
+  remove_user_error_msg: '',
 };
 
 const gymReducer: Reducer<GymState> = produce(
@@ -17,6 +22,7 @@ const gymReducer: Reducer<GymState> = produce(
     const draft = newDraft;
     const {type, payload} = action;
     switch (type) {
+      // ********************* GET USERS *********************
       case GymTypes.USER_REQUEST:
         draft.users_loading = true;
         draft.users_error = false;
@@ -31,9 +37,10 @@ const gymReducer: Reducer<GymState> = produce(
       case GymTypes.USER_ERROR:
         draft.users = [];
         draft.users_loading = false;
-        draft.users_error = false;
+        draft.users_error = true;
         break;
 
+      // ********************* CREATE NEW USER *********************
       case GymTypes.CREATE_USER_REQUEST:
         draft.create_user_loading = true;
         draft.create_user_error = false;
@@ -56,6 +63,36 @@ const gymReducer: Reducer<GymState> = produce(
         draft.create_user_msg = '';
         draft.create_user_loading = false;
         draft.create_user_error = false;
+        break;
+
+      // ********************* REMOVE USER *********************
+      case GymTypes.REMOVE_USERS_REQUEST:
+        draft.remove_user_loading = true;
+        draft.remove_user_success = false;
+        draft.remove_user_error = false;
+        draft.remove_user_error_msg = '';
+        break;
+
+      case GymTypes.REMOVE_USERS_SUCCESS:
+        draft.users = payload.users;
+        draft.remove_user_success = true;
+        draft.remove_user_loading = false;
+        draft.remove_user_error = false;
+        draft.remove_user_error_msg = '';
+        break;
+
+      case GymTypes.REMOVE_USERS_ERROR:
+        draft.remove_user_success = false;
+        draft.remove_user_loading = false;
+        draft.remove_user_error = true;
+        draft.remove_user_error_msg = payload.msg;
+        break;
+
+      case GymTypes.REMOVE_USERS_RESET:
+        draft.remove_user_success = false;
+        draft.remove_user_loading = false;
+        draft.remove_user_error = false;
+        draft.remove_user_error_msg = '';
         break;
 
       default:

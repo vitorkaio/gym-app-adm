@@ -15,7 +15,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Colors from 'components/styles/Colors';
 import UserForms from './UserForm/UserForm';
 import {CreateUser} from 'models/TypesAux';
-import AddUserImage from 'components/styles/assets/add_user.png';
+import LoadingDialog from 'components/Dialogs/Loading/LoadingDialog';
+const AddUserImage = require('components/styles/assets/add_user.png');
 
 type Props = DispatchProps;
 
@@ -36,6 +37,7 @@ const AddUserModal: React.FC<Props> = props => {
   }, [createUserReset, toggleModalUser]);
 
   const addUserHandler = (student: CreateUser) => {
+    console.log(student);
     createUserRequest(student);
   };
 
@@ -65,12 +67,12 @@ const AddUserModal: React.FC<Props> = props => {
             </ImageInput>
             <UserForms
               onSubmit={addUserHandler}
-              loading={createUserLoading}
               createUserError={createUserErr}
               createUserErrorMsg={createUserMsg}
             />
           </Forms>
         </Content>
+        {createUserLoading && <LoadingDialog title="Adicionando Usuário" />}
       </Container>
     </Modal>
   );

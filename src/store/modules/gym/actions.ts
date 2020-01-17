@@ -18,3 +18,12 @@ export const createUserSuccess = (msg: string, users: User[]) =>
 export const createUserError = (err: string) =>
   action(GymTypes.CREATE_USER_ERROR, {err});
 export const createUserReset = () => action(GymTypes.CREATE_USER_RESET);
+
+// REMOVE USER
+export const removeUserRequest = (id: string) =>
+  action(GymTypes.REMOVE_USERS_REQUEST, {id});
+export const removeUserSuccess = (users: User[]) =>
+  action(GymTypes.REMOVE_USERS_SUCCESS, {users});
+export const removeUserError = (msg: string) =>
+  action(GymTypes.REMOVE_USERS_ERROR, {msg});
+export const removeUserReset = () => action(GymTypes.REMOVE_USERS_RESET);

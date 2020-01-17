@@ -3,7 +3,7 @@ enum Colors {
   success_color = '#00e676',
   warning_color = '#ff6d00',
   error_color = '#f44336',
-  delete_color = '#f44336',
+  delete_color = '#ff616f',
   info_color = '#448aff',
   text_color = '#fff',
   text_color_dark = '#303030',

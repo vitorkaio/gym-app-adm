@@ -7,7 +7,7 @@ interface Props extends ActivityIndicatorProps {
 }
 
 const Loading: React.FC<Props> = ({size}) => {
-  return <ActivityIndicator size={size} color={Colors.text_color} />;
+  return <ActivityIndicator size={size} color={Colors.primary_color} />;
 };
 
 export default Loading;

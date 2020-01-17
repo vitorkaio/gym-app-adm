@@ -14,6 +14,11 @@ export enum GymTypes {
   CREATE_USER_SUCCESS = '@create_user/CREATE_USER_SUCCESS',
   CREATE_USER_ERROR = '@create_user/CREATE_USER_ERROR',
   CREATE_USER_RESET = '@create_user/CREATE_USER_RESET',
+
+  REMOVE_USERS_REQUEST = '@remove_user/REMOVE_USER_REQUEST',
+  REMOVE_USERS_SUCCESS = '@remove_user/REMOVE_USERS_SUCCESS',
+  REMOVE_USERS_ERROR = '@remove_user/REMOVE_USERS_ERROR',
+  REMOVE_USERS_RESET = '@remove_user/REMOVE_USERS_RESET',
 }
 
 export interface GymState {
@@ -24,11 +29,22 @@ export interface GymState {
   create_user_msg: string;
   create_user_loading: boolean;
   create_user_error: boolean;
+
+  remove_user_loading: boolean;
+  remove_user_success: boolean;
+  remove_user_error: boolean;
+  remove_user_error_msg: string;
 }
 
 export interface CreateUserAction extends Action {
   payload: {
     newUser: CreateUser;
+  };
+}
+
+export interface RemoveUserAction extends Action {
+  payload: {
+    id: string;
   };
 }
 

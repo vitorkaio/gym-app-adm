@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ApplicationState} from 'store/store';
 import * as GymActions from 'store/modules/gym/actions';
 import {DispatchProps, StateProps} from './HomeTypes';
-import {Container, Content, Text} from './HomeStyle';
+import {Container, Content} from './HomeStyle';
 import Header from 'components/Header/Header';
 import Colors from 'components/styles/Colors';
 import List from './List/List';
@@ -14,11 +14,23 @@ import User from 'models/User';
 import Add from 'components/Add/Add';
 import AddUserModal from './AddUserModal/AddUserModal';
 import {CreateUser} from 'models/TypesAux';
+import LoadingDialog from 'components/Dialogs/Loading/LoadingDialog';
+import ShareDatas from 'services/ShareDatas';
 
 type Props = StateProps & DispatchProps;
 
 const Home: React.FC<Props> = props => {
-  const {usersRequest, gymReducer, createUserRequest, createUserReset} = props;
+  const {
+    usersRequest,
+    users,
+    usersLoading,
+    createUserLoadingData,
+    createUserMsgData,
+    createUserErrorData,
+    createUserRequest,
+    createUserReset,
+    navigation,
+  } = props;
   const [visibleModalUser, setVisibleModalUser] = useState(false);
 
   useEffect(() => {
@@ -30,6 +42,9 @@ const Home: React.FC<Props> = props => {
   };
 
   const infoUserNavigate = (user: User) => {
+    const shareDatas = ShareDatas.getInstance();
+    shareDatas.userSelected = user;
+    navigation.navigate('InfoUser');
     console.log(user);
   };
 
@@ -41,13 +56,7 @@ const Home: React.FC<Props> = props => {
     createUserRequest(newUser);
   };
 
-  const {
-    users,
-    users_loading,
-    create_user_loading,
-    create_user_msg,
-    create_user_error,
-  } = gymReducer;
+  console.log('Home - Render');
 
   return (
     <Container>
@@ -56,8 +65,8 @@ const Home: React.FC<Props> = props => {
         <Icon name="magnify" size={25} color={Colors.primary_color} />
       </Header>
       <Content>
-        {users_loading ? (
-          <Text>Carregando...</Text>
+        {usersLoading ? (
+          <LoadingDialog title="Carregando Usuários" />
         ) : (
           <List data={users} select={infoUserNavigate} />
         )}
@@ -69,9 +78,9 @@ const Home: React.FC<Props> = props => {
           toggleModalUser={toggleVisibleModalUser}
           createUserRequest={createUserHandler}
           createUserReset={createUserReset}
-          createUserLoading={create_user_loading}
-          createUserMsg={create_user_msg}
-          createUserErr={create_user_error}
+          createUserLoading={createUserLoadingData}
+          createUserMsg={createUserMsgData}
+          createUserErr={createUserErrorData}
         />
       ) : null}
     </Container>
@@ -79,7 +88,12 @@ const Home: React.FC<Props> = props => {
 };
 
 const mapStateToProps = (state: ApplicationState) => ({
-  gymReducer: state.gymReducer,
+  usersLoading: state.gymReducer.users_loading,
+  users: state.gymReducer.users,
+  usersError: state.gymReducer.users_error,
+  createUserLoadingData: state.gymReducer.create_user_loading,
+  createUserMsgData: state.gymReducer.create_user_msg,
+  createUserErrorData: state.gymReducer.create_user_error,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) =>

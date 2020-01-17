@@ -7,8 +7,10 @@ import {
   userError,
   createUserSuccess,
   createUserError,
+  removeUserSuccess,
+  removeUserError,
 } from './actions';
-import {GymTypes, CreateUserAction} from './types';
+import {GymTypes, CreateUserAction, RemoveUserAction} from './types';
 
 function* usersRequestLoad() {
   try {
@@ -38,7 +40,27 @@ function* createUserLoad(action: CreateUserAction) {
   }
 }
 
+function* removeUserLoad(action: RemoveUserAction) {
+  const {payload} = action;
+  try {
+    const user: User = yield call(GymApi.removeUser, payload.id);
+    if (user) {
+      const users: User[] = yield call(GymApi.getUsers);
+      if (users) {
+        yield put(removeUserSuccess(users));
+      } else {
+        yield put(removeUserError('error'));
+      }
+    } else {
+      yield put(removeUserError('error'));
+    }
+  } catch (error) {
+    yield put(removeUserError('error'));
+  }
+}
+
 export default [
   takeLatest(GymTypes.USER_REQUEST, usersRequestLoad),
   takeLatest(GymTypes.CREATE_USER_REQUEST, createUserLoad),
+  takeLatest(GymTypes.REMOVE_USERS_REQUEST, removeUserLoad),
 ];

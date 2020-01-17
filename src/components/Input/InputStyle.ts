@@ -9,7 +9,7 @@ export const Container = styled.View`
 export const Label = styled.Text`
   font-size: 14;
   font-weight: bold;
-  color: ${Colors.label_color};
+  color: ${Colors.primary_color};
   margin-left: 1;
 `;
 
