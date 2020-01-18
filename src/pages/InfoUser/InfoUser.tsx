@@ -15,6 +15,7 @@ import ConfirmDialog from 'components/Dialogs/Confirm/ConfirmDialog';
 import LoadingDialog from 'components/Dialogs/Loading/LoadingDialog';
 import List from './List/List';
 import {Training} from 'models/User';
+import Add from 'components/Add/Add';
 
 type Props = DispatchProps & StateProps;
 
@@ -44,6 +45,10 @@ const InfoUser: React.FC<Props> = props => {
 
   const infoTrainingNavigate = (training: Training) => {
     console.log(training);
+  };
+
+  const addTrainingNavigate = () => {
+    console.log('Add Training');
   };
 
   useEffect(() => {
@@ -78,6 +83,7 @@ const InfoUser: React.FC<Props> = props => {
         )}
         {removeUserLoadingData && <LoadingDialog title="Deletando Usuário" />}
       </Content>
+      <Add onPressHandler={addTrainingNavigate} />
     </Container>
   );
 };
