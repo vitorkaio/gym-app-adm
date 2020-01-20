@@ -27,3 +27,13 @@ export const removeUserSuccess = (users: User[]) =>
 export const removeUserError = (msg: string) =>
   action(GymTypes.REMOVE_USERS_ERROR, {msg});
 export const removeUserReset = () => action(GymTypes.REMOVE_USERS_RESET);
+
+// REMOVE USER
+export const updateAddTrainingUserRequest = (id: string, name: string) =>
+  action(GymTypes.UPDATE_ADD_TRAINING_USER_REQUEST, {id, name});
+export const updateAddTrainingUserSuccess = (users: User[]) =>
+  action(GymTypes.UPDATE_ADD_TRAINING_USER_SUCCESS, {users});
+export const updateAddTrainingUserError = (msg: string) =>
+  action(GymTypes.UPDATE_ADD_TRAINING_USER_ERROR, {msg});
+export const updateAddTrainingUserReset = () =>
+  action(GymTypes.UPDATE_ADD_TRAINING_USER_RESET);

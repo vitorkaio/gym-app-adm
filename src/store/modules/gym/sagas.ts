@@ -9,8 +9,15 @@ import {
   createUserError,
   removeUserSuccess,
   removeUserError,
+  updateAddTrainingUserSuccess,
+  updateAddTrainingUserError,
 } from './actions';
-import {GymTypes, CreateUserAction, RemoveUserAction} from './types';
+import {
+  GymTypes,
+  CreateUserAction,
+  RemoveUserAction,
+  UpdateAddTrainingUserAction,
+} from './types';
 
 function* usersRequestLoad() {
   try {
@@ -59,8 +66,32 @@ function* removeUserLoad(action: RemoveUserAction) {
   }
 }
 
+function* updateAddTrainingUser(action: UpdateAddTrainingUserAction) {
+  const {payload} = action;
+  try {
+    const user: User = yield call(
+      GymApi.addTrainingUser,
+      payload.id,
+      payload.name,
+    );
+    if (user) {
+      const users: User[] = yield call(GymApi.getUsers);
+      if (users) {
+        yield put(updateAddTrainingUserSuccess(users));
+      } else {
+        yield put(updateAddTrainingUserError('error'));
+      }
+    } else {
+      yield put(updateAddTrainingUserError('error'));
+    }
+  } catch (error) {
+    yield put(updateAddTrainingUserError('error'));
+  }
+}
+
 export default [
   takeLatest(GymTypes.USER_REQUEST, usersRequestLoad),
   takeLatest(GymTypes.CREATE_USER_REQUEST, createUserLoad),
   takeLatest(GymTypes.REMOVE_USERS_REQUEST, removeUserLoad),
+  takeLatest(GymTypes.UPDATE_ADD_TRAINING_USER_REQUEST, updateAddTrainingUser),
 ];

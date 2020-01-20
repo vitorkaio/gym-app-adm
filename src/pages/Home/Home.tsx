@@ -43,7 +43,7 @@ const Home: React.FC<Props> = props => {
 
   const infoUserNavigate = (user: User) => {
     const shareDatas = ShareDatas.getInstance();
-    shareDatas.userSelected = user;
+    shareDatas.id = user._id;
     navigation.navigate('InfoUser');
   };
 

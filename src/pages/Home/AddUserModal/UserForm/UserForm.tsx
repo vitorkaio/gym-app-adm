@@ -192,7 +192,7 @@ const UserForms: React.FC<Props> = props => {
           </InputData>
         </Forms>
       </KeyboardAwareScrollView>
-      <FooterButton clickHandler={validateForm} />
+      <FooterButton clickHandler={validateForm} text="Adicionar" />
     </Container>
   );
 };

@@ -6,19 +6,24 @@ import {CreateUser} from 'models/TypesAux';
  * Action types
  */
 export enum GymTypes {
-  USER_REQUEST = '@user/USER_REQUEST',
-  USER_SUCCCES = '@user/USER_SUCCCES',
-  USER_ERROR = '@user/USER_ERROR',
+  USER_REQUEST = '@gym/USER_REQUEST',
+  USER_SUCCCES = '@gym/USER_SUCCCES',
+  USER_ERROR = '@gym/USER_ERROR',
 
-  CREATE_USER_REQUEST = '@create_user/CREATE_USER_REQUEST',
-  CREATE_USER_SUCCESS = '@create_user/CREATE_USER_SUCCESS',
-  CREATE_USER_ERROR = '@create_user/CREATE_USER_ERROR',
-  CREATE_USER_RESET = '@create_user/CREATE_USER_RESET',
+  CREATE_USER_REQUEST = '@gym/CREATE_USER_REQUEST',
+  CREATE_USER_SUCCESS = '@gym/CREATE_USER_SUCCESS',
+  CREATE_USER_ERROR = '@gym/CREATE_USER_ERROR',
+  CREATE_USER_RESET = '@gym/CREATE_USER_RESET',
 
-  REMOVE_USERS_REQUEST = '@remove_user/REMOVE_USER_REQUEST',
-  REMOVE_USERS_SUCCESS = '@remove_user/REMOVE_USERS_SUCCESS',
-  REMOVE_USERS_ERROR = '@remove_user/REMOVE_USERS_ERROR',
-  REMOVE_USERS_RESET = '@remove_user/REMOVE_USERS_RESET',
+  REMOVE_USERS_REQUEST = '@gym/REMOVE_USER_REQUEST',
+  REMOVE_USERS_SUCCESS = '@gym/REMOVE_USERS_SUCCESS',
+  REMOVE_USERS_ERROR = '@gym/REMOVE_USERS_ERROR',
+  REMOVE_USERS_RESET = '@gym/REMOVE_USERS_RESET',
+
+  UPDATE_ADD_TRAINING_USER_REQUEST = '@gym/UPDATE_ADD_TRAINING_USER_REQUEST',
+  UPDATE_ADD_TRAINING_USER_SUCCESS = '@gym/UPDATE_ADD_TRAINING_USER_SUCCESS',
+  UPDATE_ADD_TRAINING_USER_ERROR = '@gym/UPDATE_ADD_TRAINING_USER_ERROR',
+  UPDATE_ADD_TRAINING_USER_RESET = '@gym/UPDATE_ADD_TRAINING_USER_RESET',
 }
 
 export interface GymState {
@@ -34,6 +39,11 @@ export interface GymState {
   remove_user_success: boolean;
   remove_user_error: boolean;
   remove_user_error_msg: string;
+
+  update_add_training_user_loading: boolean;
+  update_add_training_user_success: boolean;
+  update_add_training_user_error: boolean;
+  update_add_training_user_error_msg: string;
 }
 
 export interface CreateUserAction extends Action {
@@ -45,6 +55,13 @@ export interface CreateUserAction extends Action {
 export interface RemoveUserAction extends Action {
   payload: {
     id: string;
+  };
+}
+
+export interface UpdateAddTrainingUserAction extends Action {
+  payload: {
+    id: string;
+    name: string;
   };
 }
 

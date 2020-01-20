@@ -6,10 +6,10 @@ import {DispatchProps} from './FooterButtonType';
 type Props = DispatchProps;
 
 const FooterButton: React.FC<Props> = props => {
-  const {clickHandler} = props;
+  const {clickHandler, text} = props;
   return (
     <Container onPress={clickHandler}>
-      <Text>Adicionar</Text>
+      <Text>{text}</Text>
     </Container>
   );
 };

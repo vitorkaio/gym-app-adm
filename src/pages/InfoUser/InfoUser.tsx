@@ -14,8 +14,9 @@ import {DispatchProps, StateProps} from './InfoUserTypes';
 import ConfirmDialog from 'components/Dialogs/Confirm/ConfirmDialog';
 import LoadingDialog from 'components/Dialogs/Loading/LoadingDialog';
 import List from './List/List';
-import {Training} from 'models/User';
+import User, {Training} from 'models/User';
 import Add from 'components/Add/Add';
+import TrainingFormModal from './TrainingFormModal/TrainingFormModal';
 
 type Props = DispatchProps & StateProps;
 
@@ -26,8 +27,16 @@ const InfoUser: React.FC<Props> = props => {
     removeUserLoadingData,
     removeUserSuccessData,
     removeUserReset,
+    addTrainingUserLoadingData,
+    addTrainingUserSuccessData,
+    addTrainingUserErrorData,
+    addTrainingUserErrorMsgData,
+    updateAddTrainingUserRequest,
+    updateAddTrainingUserReset,
+    users,
   } = props;
   const [toggleConfim, setToggleConfirm] = useState(false);
+  const [visibleModalAddTraining, setVisibleModalAddTraining] = useState(false);
 
   const navigateGoBack = useCallback(() => {
     removeUserReset();
@@ -36,7 +45,7 @@ const InfoUser: React.FC<Props> = props => {
 
   const removeUserHandler = (action: boolean) => {
     if (action) {
-      removeUserRequest(id);
+      removeUserRequest(id ? id : '');
       setToggleConfirm(false);
     } else {
       setToggleConfirm(false);
@@ -48,7 +57,15 @@ const InfoUser: React.FC<Props> = props => {
   };
 
   const addTrainingNavigate = () => {
-    console.log('Add Training');
+    toggleVisibleModalAddTraining();
+  };
+
+  const toggleVisibleModalAddTraining = () => {
+    setVisibleModalAddTraining(!visibleModalAddTraining);
+  };
+
+  const addTrainingUserHandler = (name: string) => {
+    updateAddTrainingUserRequest(id ? id : '', name);
   };
 
   useEffect(() => {
@@ -58,12 +75,14 @@ const InfoUser: React.FC<Props> = props => {
   }, [navigateGoBack, removeUserSuccessData]);
 
   const shareDatas = ShareDatas.getInstance();
-  const username = shareDatas.userSelected.username;
-  const id = shareDatas.userSelected._id;
-  const trainings = shareDatas.userSelected.trainings;
+  const user: User | undefined = shareDatas.getUser([...users]);
+  const username = user?.username;
+  const id = user?._id;
+  const trainings = user?.trainings;
+  console.log(users);
   return (
     <Container>
-      <Header title={username}>
+      <Header title={username ? username : ''}>
         <TouchableOpacity onPress={navigateGoBack}>
           <Icon name="arrow-left" size={25} color={Colors.primary_color} />
         </TouchableOpacity>
@@ -73,7 +92,7 @@ const InfoUser: React.FC<Props> = props => {
         {null}
       </Header>
       <Content>
-        <List data={trainings} select={infoTrainingNavigate} />
+        <List data={trainings ? trainings : []} select={infoTrainingNavigate} />
         {toggleConfim && (
           <ConfirmDialog
             title="Deletar"
@@ -84,15 +103,33 @@ const InfoUser: React.FC<Props> = props => {
         {removeUserLoadingData && <LoadingDialog title="Deletando Usuário" />}
       </Content>
       <Add onPressHandler={addTrainingNavigate} />
+      {visibleModalAddTraining && (
+        <TrainingFormModal
+          visibleModalAddTraining={visibleModalAddTraining}
+          toggleModalAddTraining={toggleVisibleModalAddTraining}
+          addTrainingUserLoading={addTrainingUserLoadingData}
+          addTrainingUserSuccess={addTrainingUserSuccessData}
+          addTrainingUserErr={addTrainingUserErrorData}
+          addTrainingUserErrMsg={addTrainingUserErrorMsgData}
+          addTrainingUserRequest={addTrainingUserHandler}
+          addTrainingUserReset={updateAddTrainingUserReset}
+        />
+      )}
     </Container>
   );
 };
 
 const mapStateToProps = (state: ApplicationState) => ({
+  users: state.gymReducer.users,
   removeUserSuccessData: state.gymReducer.remove_user_success,
   removeUserLoadingData: state.gymReducer.remove_user_loading,
   removeUserErrorData: state.gymReducer.remove_user_error,
   removeUserErrorMsgData: state.gymReducer.remove_user_error_msg,
+  addTrainingUserLoadingData: state.gymReducer.update_add_training_user_loading,
+  addTrainingUserSuccessData: state.gymReducer.update_add_training_user_success,
+  addTrainingUserErrorData: state.gymReducer.update_add_training_user_error,
+  addTrainingUserErrorMsgData:
+    state.gymReducer.update_add_training_user_error_msg,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) =>

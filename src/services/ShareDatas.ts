@@ -3,7 +3,7 @@ import User from 'models/User';
 class ShareDatas {
   private static instance: ShareDatas;
 
-  private _userSelected: User = new User();
+  private _id: string = '';
 
   private constructor() {}
 
@@ -15,14 +15,14 @@ class ShareDatas {
     return ShareDatas.instance;
   }
 
-  public get userSelected(): User {
-    return this._userSelected;
+  public getUser(users: User[]): User | undefined {
+    return users.filter(user => user._id === this._id).pop();
   }
-  public set userSelected(value: User) {
-    this._userSelected = value;
+  public set id(value: string) {
+    this._id = value;
   }
   public userRemoveSelected() {
-    this._userSelected = new User();
+    this._id = '';
   }
 }
 
