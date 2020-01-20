@@ -33,6 +33,10 @@ const InfoUser: React.FC<Props> = props => {
     addTrainingUserErrorMsgData,
     updateAddTrainingUserRequest,
     updateAddTrainingUserReset,
+    removeTrainingUserRequest,
+    removeTrainingUserReset,
+    removeTrainingUserSuccessgData,
+    removeTrainingUserLoadingData,
     users,
   } = props;
   const [toggleConfim, setToggleConfirm] = useState(false);
@@ -68,6 +72,10 @@ const InfoUser: React.FC<Props> = props => {
     updateAddTrainingUserRequest(id ? id : '', name);
   };
 
+  const removeTrainingUserHandler = (idTraining: string) => {
+    removeTrainingUserRequest(id ? id : '', idTraining);
+  }
+
   useEffect(() => {
     if (removeUserSuccessData) {
       navigateGoBack();
@@ -92,7 +100,8 @@ const InfoUser: React.FC<Props> = props => {
         {null}
       </Header>
       <Content>
-        <List data={trainings ? trainings : []} select={infoTrainingNavigate} />
+        <List data={trainings ? trainings : []} select={infoTrainingNavigate} removeTrainingUserHandler={removeTrainingUserHandler} />
+        {removeTrainingUserLoadingData && <LoadingDialog title="Removendo Treino" />}
         {toggleConfim && (
           <ConfirmDialog
             title="Deletar"
@@ -130,6 +139,10 @@ const mapStateToProps = (state: ApplicationState) => ({
   addTrainingUserErrorData: state.gymReducer.update_add_training_user_error,
   addTrainingUserErrorMsgData:
     state.gymReducer.update_add_training_user_error_msg,
+  removeTrainingUserLoadingData: state.gymReducer.remove_training_user_loading,
+  removeTrainingUserSuccessgData: state.gymReducer.remove_training_user_success,
+  removeTrainingUserErrorData: state.gymReducer.remove_training_user_error,
+  removeTrainingUserErrorMsgData: state.gymReducer.remove_training_user_error_msg,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) =>

@@ -12,6 +12,11 @@ export interface StateProps {
   addTrainingUserErrorData: boolean;
   addTrainingUserErrorMsgData: string;
 
+  removeTrainingUserLoadingData: boolean;
+  removeTrainingUserSuccessgData: boolean;
+  removeTrainingUserErrorData: boolean;
+  removeTrainingUserErrorMsgData: string;
+
   users: User[];
 }
 
@@ -21,4 +26,6 @@ export interface DispatchProps {
   removeUserReset: () => void;
   updateAddTrainingUserRequest: (id: string, name: string) => void;
   updateAddTrainingUserReset: () => void;
+  removeTrainingUserRequest: (idUser: string, idTraining: string) => void;
+  removeTrainingUserReset: () => void;
 }

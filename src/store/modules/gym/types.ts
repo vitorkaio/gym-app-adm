@@ -24,6 +24,11 @@ export enum GymTypes {
   UPDATE_ADD_TRAINING_USER_SUCCESS = '@gym/UPDATE_ADD_TRAINING_USER_SUCCESS',
   UPDATE_ADD_TRAINING_USER_ERROR = '@gym/UPDATE_ADD_TRAINING_USER_ERROR',
   UPDATE_ADD_TRAINING_USER_RESET = '@gym/UPDATE_ADD_TRAINING_USER_RESET',
+
+  REMOVE_TRAINING_USER_REQUEST = '@gym/REMOVE_TRAINING_USER_REQUEST',
+  REMOVE_TRAINING_USER_SUCCESS = '@gym/REMOVE_TRAINING_USER_SUCCESS',
+  REMOVE_TRAINING_USER_ERROR = '@gym/REMOVE_TRAINING_USER_ERROR',
+  REMOVE_TRAINING_USER_RESET = '@gym/REMOVE_TRAINING_USER_RESET',
 }
 
 export interface GymState {
@@ -44,6 +49,11 @@ export interface GymState {
   update_add_training_user_success: boolean;
   update_add_training_user_error: boolean;
   update_add_training_user_error_msg: string;
+
+  remove_training_user_loading: boolean;
+  remove_training_user_success: boolean;
+  remove_training_user_error: boolean;
+  remove_training_user_error_msg: string;
 }
 
 export interface CreateUserAction extends Action {
@@ -62,6 +72,13 @@ export interface UpdateAddTrainingUserAction extends Action {
   payload: {
     id: string;
     name: string;
+  };
+}
+
+export interface RemoveTrainingUserAction extends Action {
+  payload: {
+    idUser: string;
+    idTraining: string;
   };
 }
 

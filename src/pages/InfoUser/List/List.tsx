@@ -1,30 +1,70 @@
-import React from 'react';
-// import {FlatList} from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet} from 'react-native';
 
 import {DispatchProps} from './ListTypes';
 // import {Training} from 'models/User';
 import RenderItemData from './RenderItemData/RenderItemData';
 import {SwipeListView} from 'react-native-swipe-list-view';
-import {View, Text, StyleSheet} from 'react-native';
+import Colors from 'components/styles/Colors';
 import {Training} from 'models/User';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-// import { Container } from './ListStyle';
+import {ContainerHidden, ItemHidden} from './ListStyle';
+import ConfirmDialog from 'components/Dialogs/Confirm/ConfirmDialog';
 
 const List: React.FC<DispatchProps> = props => {
-  const {data} = props;
+  const {data, removeTrainingUserHandler} = props;
+  const [toggleConfim, setToggleConfim] = useState(false);
+  const [training, setTraining] = useState<Training>();
+
+  const deleteTrainingConfirm = (training: Training) => {
+    // removeTrainingUserHandler(id);
+    setTraining(training);
+    setToggleConfim(true);
+  };
+
+  const deleteTrainingUserHandler = (action: boolean) => {
+    if (action) {
+      removeTrainingUserHandler(training?._id);
+      setToggleConfim(false);
+    } else {
+      setToggleConfim(false);
+    }
+  };
+
+  const editTrainingHandler = (training: Training) => {
+    console.log(training);
+  };
+
   return (
-    <SwipeListView
-      useFlatList
-      data={data}
-      keyExtractor={(item: Training, _) => item._id}
-      renderItem={item => <RenderItemData item={item.item} {...props} />}
-      renderHiddenItem={() => (
-        <View style={styles.rowBack}>
-          <Text>Right</Text>
-        </View>
+    <>
+      <SwipeListView
+        useFlatList
+        data={data}
+        keyExtractor={(item: Training, _) => item._id}
+        renderItem={item => <RenderItemData item={item.item} {...props} />}
+        renderHiddenItem={item => (
+          <ContainerHidden>
+            <ItemHidden onPress={() => deleteTrainingConfirm(item.item)}>
+              <Icon name="delete" size={22} color={Colors.delete_color} />
+            </ItemHidden>
+            <ItemHidden
+              style={styles.itemHiddenAlign}
+              onPress={() => editTrainingHandler(item.item)}>
+              <Icon name="pencil" size={22} color={Colors.info_color} />
+            </ItemHidden>
+          </ContainerHidden>
+        )}
+        rightOpenValue={-80}
+      />
+      {toggleConfim && (
+        <ConfirmDialog
+          title="Deletar"
+          text={`Deseja deletar o treino ${training?.name}?`}
+          action={deleteTrainingUserHandler}
+        />
       )}
-      rightOpenValue={-150}
-    />
+    </>
   );
 };
 
@@ -35,12 +75,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: 50,
   },
-  rowBack: {
-    alignItems: 'center',
-    flexDirection: 'row-reverse',
-    paddingLeft: 15,
-    flex: 1,
-    marginTop: 12,
+  itemHiddenAlign: {
+    marginRight: 15,
   },
 });
 

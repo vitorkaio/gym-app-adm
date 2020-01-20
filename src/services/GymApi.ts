@@ -60,6 +60,23 @@ class GymApi {
       throw error;
     }
   };
+
+  static removeTrainingUser = async (
+    idUser: string,
+    idTraining: string,
+  ): Promise<User> => {
+    try {
+      console.log(idUser, idTraining);
+      const res: AxiosResponse<ResData> = await axios.patch(
+        `${URL}/users/${idUser}/remove/training/${idTraining}`,
+      );
+      const user: User = res.data.data as User;
+      return user;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
 }
 
 export default GymApi;

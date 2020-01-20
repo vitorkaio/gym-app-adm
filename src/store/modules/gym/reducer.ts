@@ -20,6 +20,11 @@ const INITIAL_STATE: GymState = {
   update_add_training_user_loading: false,
   update_add_training_user_error: false,
   update_add_training_user_error_msg: '',
+
+  remove_training_user_success: false,
+  remove_training_user_loading: false,
+  remove_training_user_error: false,
+  remove_training_user_error_msg: '',
 };
 
 const gymReducer: Reducer<GymState> = produce(
@@ -128,6 +133,36 @@ const gymReducer: Reducer<GymState> = produce(
         draft.update_add_training_user_loading = false;
         draft.update_add_training_user_error = false;
         draft.update_add_training_user_error_msg = '';
+        break;
+
+      // ********************* REMOVE TRAINING USER *********************
+      case GymTypes.REMOVE_TRAINING_USER_REQUEST:
+        draft.remove_training_user_loading = true;
+        draft.remove_training_user_success = false;
+        draft.remove_training_user_error = false;
+        draft.remove_training_user_error_msg = '';
+        break;
+
+      case GymTypes.REMOVE_TRAINING_USER_SUCCESS:
+        draft.users = payload.users;
+        draft.remove_training_user_success = true;
+        draft.remove_training_user_loading = false;
+        draft.remove_training_user_error = false;
+        draft.remove_training_user_error_msg = '';
+        break;
+
+      case GymTypes.REMOVE_TRAINING_USER_ERROR:
+        draft.remove_training_user_success = false;
+        draft.remove_training_user_loading = false;
+        draft.remove_training_user_error = true;
+        draft.remove_training_user_error_msg = payload.msg;
+        break;
+
+      case GymTypes.REMOVE_TRAINING_USER_RESET:
+        draft.remove_training_user_success = false;
+        draft.remove_training_user_loading = false;
+        draft.remove_training_user_error = false;
+        draft.remove_training_user_error_msg = '';
         break;
 
       default:
