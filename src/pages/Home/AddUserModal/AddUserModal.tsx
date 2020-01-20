@@ -16,7 +16,7 @@ import Colors from 'components/styles/Colors';
 import UserForms from './UserForm/UserForm';
 import {CreateUser} from 'models/TypesAux';
 import LoadingDialog from 'components/Dialogs/Loading/LoadingDialog';
-const AddUserImage = require('components/styles/assets/add_user.png');
+const AddUserImage = require('components/styles/assets/add_user_wall.png');
 
 type Props = DispatchProps;
 
@@ -80,8 +80,8 @@ const AddUserModal: React.FC<Props> = props => {
 
 const AddUserModalStyle = StyleSheet.create({
   image: {
-    width: 200,
-    height: 140,
+    width: 180,
+    height: 180,
   },
 });
 

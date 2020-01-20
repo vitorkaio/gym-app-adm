@@ -12,7 +12,7 @@ export const Container = styled.View`
 `;
 
 export const CenterTitle = styled.View`
-  flex: 2;
+  flex: 6;
   display: flex;
   justify-content: center;
   align-items: center;

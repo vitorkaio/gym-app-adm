@@ -3,6 +3,7 @@ import {createStackNavigator} from 'react-navigation-stack';
 
 import HomeScreen from 'pages/Home/Home';
 import InfoUserScreen from 'pages/InfoUser/InfoUser';
+import InfoTrainingScreen from 'pages/InfoTraining/InfoTraining';
 
 const AdminNavigator = createStackNavigator(
   {
@@ -11,6 +12,9 @@ const AdminNavigator = createStackNavigator(
     },
     InfoUser: {
       screen: InfoUserScreen,
+    },
+    InfoTraining: {
+      screen: InfoTrainingScreen,
     },
   },
   {

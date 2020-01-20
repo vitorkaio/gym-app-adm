@@ -58,6 +58,8 @@ const InfoUser: React.FC<Props> = props => {
 
   const infoTrainingNavigate = (training: Training) => {
     console.log(training);
+    shareDatas.idTraining = training._id;
+    navigation.navigate('InfoTraining');
   };
 
   const addTrainingNavigate = () => {

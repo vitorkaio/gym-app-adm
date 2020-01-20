@@ -1,0 +1,6 @@
+import {Exercise} from 'models/User';
+
+export interface DispatchProps {
+  data: Exercise[];
+  removeExerciseTrainingUserHandler: (idExercise: string) => void;
+}
