@@ -12,7 +12,7 @@ import Colors from 'components/styles/Colors';
 import List from './List/List';
 import User from 'models/User';
 import Add from 'components/Add/Add';
-import AddUserModal from './AddUserModal/AddUserModal';
+import UserFormModal from './UserFormModal/UserFormModal';
 import {CreateUser} from 'models/TypesAux';
 import LoadingDialog from 'components/Dialogs/Loading/LoadingDialog';
 import ShareDatas from 'services/ShareDatas';
@@ -25,8 +25,9 @@ const Home: React.FC<Props> = props => {
     usersData,
     usersLoadingData,
     createUserLoadingData,
-    createUserMsgData,
     createUserErrorData,
+    createUserSuccessData,
+    createUserErrorMsgData,
     createUserRequest,
     createUserReset,
     navigation,
@@ -34,8 +35,16 @@ const Home: React.FC<Props> = props => {
     removeUserRequest,
     removeUserReset,
     removeUserSuccessDatas,
+    editUserLoadingData,
+    editUserSuccessData,
+    editUserErrorData,
+    removeUserErrorMsgData,
+    editUserRequest,
+    editUserErrorMsgData,
+    editUserReset,
   } = props;
   const [visibleModalUser, setVisibleModalUser] = useState(false);
+  const [editUser, setEditUser] = useState<User>();
 
   const addUserNavigate = () => {
     toggleVisibleModalUser();
@@ -57,6 +66,19 @@ const Home: React.FC<Props> = props => {
 
   const removeUserHandler = (id: string) => {
     removeUserRequest(id);
+  };
+
+  const editUserHandler = (user: User) => {
+    setEditUser(user);
+    toggleVisibleModalUser();
+  };
+
+  const editUserReqHandler = (newUser: CreateUser) => {
+    editUserRequest(editUser!._id, newUser);
+  };
+
+  const resetEdituser = () => {
+    setEditUser(undefined);
   };
 
   useEffect(() => {
@@ -85,20 +107,31 @@ const Home: React.FC<Props> = props => {
             data={usersData}
             select={infoUserNavigate}
             removeUserHandler={removeUserHandler}
+            editUserHandler={editUserHandler}
           />
         )}
         {removeUserLoadingData && <LoadingDialog title="Deletando Usuário" />}
       </Content>
       <Add onPressHandler={addUserNavigate} />
       {visibleModalUser ? (
-        <AddUserModal
+        <UserFormModal
+          resetEdituser={resetEdituser}
           visibleModalUser={visibleModalUser}
           toggleModalUser={toggleVisibleModalUser}
-          createUserRequest={createUserHandler}
-          createUserReset={createUserReset}
-          createUserLoading={createUserLoadingData}
-          createUserMsg={createUserMsgData}
-          createUserErr={createUserErrorData}
+          actionUserRequest={editUser ? editUserReqHandler : createUserHandler}
+          actionUserReset={editUser ? editUserReset : createUserReset}
+          actionUserSuccess={
+            editUser ? editUserSuccessData : createUserSuccessData
+          }
+          actionUserLoading={
+            editUser ? editUserLoadingData : createUserLoadingData
+          }
+          actionUserMsg={
+            editUser ? editUserErrorMsgData : createUserErrorMsgData
+          }
+          actionUserErr={editUser ? editUserErrorData : createUserErrorData}
+          edit={editUser ? true : false}
+          user={editUser ? editUser : null}
         />
       ) : null}
     </Container>
@@ -109,14 +142,21 @@ const mapStateToProps = (state: ApplicationState) => ({
   usersLoadingData: state.gymReducer.users_loading,
   usersData: state.gymReducer.users,
   usersErrorData: state.gymReducer.users_error,
+
   createUserLoadingData: state.gymReducer.create_user_loading,
-  createUserMsgData: state.gymReducer.create_user_msg,
+  createUserSuccessData: state.gymReducer.create_user_success,
   createUserErrorData: state.gymReducer.create_user_error,
+  createUserErrorMsgData: state.gymReducer.create_user_error_msg,
 
   removeUserSuccessData: state.gymReducer.remove_user_success,
   removeUserLoadingData: state.gymReducer.remove_user_loading,
   removeUserErrorData: state.gymReducer.remove_user_error,
   removeUserErrorMsgData: state.gymReducer.remove_user_error_msg,
+
+  editUserLoadingData: state.gymReducer.edit_user_loading,
+  editUserSuccessData: state.gymReducer.edit_user_success,
+  editUserErrorData: state.gymReducer.edit_user_error,
+  editUserErrorMsgData: state.gymReducer.edit_user_error_msg,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) =>

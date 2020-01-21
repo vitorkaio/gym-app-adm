@@ -8,13 +8,19 @@ export interface StateProps {
   usersErrorData: boolean;
 
   createUserLoadingData: boolean;
-  createUserMsgData: string;
+  createUserSuccessData: boolean;
+  createUserErrorMsgData: string;
   createUserErrorData: boolean;
 
   removeUserSuccessDatas: boolean;
   removeUserLoadingData: boolean;
   removeUserErrorData: boolean;
   removeUserErrorMsgData: string;
+
+  editUserLoadingData: boolean;
+  editUserSuccessData: boolean;
+  editUserErrorData: boolean;
+  editUserErrorMsgData: string;
 }
 
 export interface DispatchProps {
@@ -24,6 +30,9 @@ export interface DispatchProps {
 
   removeUserRequest: (id: string) => void;
   removeUserReset: () => void;
+
+  editUserRequest: (id: string, user: CreateUser) => void;
+  editUserReset: () => void;
 
   navigation: NavigationStackProp;
 }

@@ -5,8 +5,8 @@ export interface DispatchProps {
   editUsername?: string;
   editPassword?: string;
   editName?: string;
-  createUserError: boolean;
-  createUserErrorMsg: string;
+  actionUserError: boolean;
+  actionUserErrorMsg: string;
   onSubmit: (newStudent: CreateUser) => void;
 }
 

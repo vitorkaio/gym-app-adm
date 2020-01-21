@@ -32,15 +32,14 @@ const UserForms: React.FC<Props> = props => {
   const [validForm, setValidForm] = useState(false);
 
   useEffect(() => {
-    console.log(props.createUserError);
-    if (props.createUserError) {
+    if (props.actionUserError) {
       const nextData = produce(username, draft => {
         draft.error = true;
-        draft.errorMsg = props.createUserErrorMsg;
+        draft.errorMsg = props.actionUserErrorMsg;
       });
       setUsername(nextData);
     }
-  }, [props.createUserError, props.createUserErrorMsg, username]);
+  }, [props.actionUserError, props.actionUserErrorMsg, username]);
 
   const inputChangeHandler = useCallback(
     (id, data) => {
@@ -192,7 +191,10 @@ const UserForms: React.FC<Props> = props => {
           </InputData>
         </Forms>
       </KeyboardAwareScrollView>
-      <FooterButton clickHandler={validateForm} text="Adicionar" />
+      <FooterButton
+        clickHandler={validateForm}
+        text={props.edit ? 'Editar' : 'Adicionar'}
+      />
     </Container>
   );
 };

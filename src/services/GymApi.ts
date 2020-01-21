@@ -109,6 +109,20 @@ class GymApi {
       throw error;
     }
   };
+
+  static editUser = async (id: string, data: CreateUser): Promise<User> => {
+    try {
+      const res: AxiosResponse<ResData> = await axios.patch(
+        `${URL}/users/${id}`,
+        data,
+      );
+      const user: User = res.data.data as User;
+      return user;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
 }
 
 export default GymApi;

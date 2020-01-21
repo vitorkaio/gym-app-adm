@@ -7,9 +7,10 @@ const INITIAL_STATE: GymState = {
   users_loading: false,
   users_error: false,
 
-  create_user_msg: '',
+  create_user_success: false,
   create_user_loading: false,
   create_user_error: false,
+  create_user_error_msg: '',
 
   remove_user_success: false,
   remove_user_loading: false,
@@ -35,6 +36,11 @@ const INITIAL_STATE: GymState = {
   remove_exercise_training_loading: false,
   remove_exercise_training_error: false,
   remove_exercise_training_error_msg: '',
+
+  edit_user_success: false,
+  edit_user_loading: false,
+  edit_user_error: false,
+  edit_user_error_msg: '',
 };
 
 const gymReducer: Reducer<GymState> = produce(
@@ -67,22 +73,25 @@ const gymReducer: Reducer<GymState> = produce(
         break;
 
       case GymTypes.CREATE_USER_SUCCESS:
-        draft.create_user_msg = payload.msg;
         draft.users = payload.users;
+        draft.create_user_success = true;
         draft.create_user_loading = false;
         draft.create_user_error = false;
+        draft.create_user_error_msg = '';
         break;
 
       case GymTypes.CREATE_USER_ERROR:
-        draft.create_user_msg = payload.err;
+        draft.create_user_success = false;
         draft.create_user_loading = false;
         draft.create_user_error = true;
+        draft.create_user_error_msg = payload.err;
         break;
 
       case GymTypes.CREATE_USER_RESET:
-        draft.create_user_msg = '';
+        draft.create_user_success = false;
         draft.create_user_loading = false;
         draft.create_user_error = false;
+        draft.create_user_error_msg = '';
         break;
 
       // ********************* REMOVE USER *********************
@@ -233,6 +242,36 @@ const gymReducer: Reducer<GymState> = produce(
         draft.remove_exercise_training_loading = false;
         draft.remove_exercise_training_error = false;
         draft.remove_exercise_training_error_msg = '';
+        break;
+
+      // ********************* EDIT USER *********************
+      case GymTypes.EDIT_USER_REQUEST:
+        draft.edit_user_loading = true;
+        draft.edit_user_success = false;
+        draft.edit_user_error = false;
+        draft.edit_user_error_msg = '';
+        break;
+
+      case GymTypes.EDIT_USER_SUCCESS:
+        draft.users = payload.users;
+        draft.edit_user_success = true;
+        draft.edit_user_loading = false;
+        draft.edit_user_error = false;
+        draft.edit_user_error_msg = '';
+        break;
+
+      case GymTypes.EDIT_USER_ERROR:
+        draft.edit_user_success = false;
+        draft.edit_user_loading = false;
+        draft.edit_user_error = true;
+        draft.edit_user_error_msg = payload.msg;
+        break;
+
+      case GymTypes.EDIT_USER_RESET:
+        draft.edit_user_success = false;
+        draft.edit_user_loading = false;
+        draft.edit_user_error = false;
+        draft.edit_user_error_msg = '';
         break;
 
       default:

@@ -14,9 +14,10 @@ import Colors from 'components/styles/Colors';
 // import { Container } from './ListStyle';
 
 const List: React.FC<DispatchProps> = props => {
-  const {data, removeUserHandler} = props;
+  const {data, removeUserHandler, editUserHandler} = props;
   const [toggleConfim, setToggleConfim] = useState(false);
   const [user, setUser] = useState<User>();
+  const [toogleEditUser, setToogleEditUser] = useState(false);
 
   const deleteUserConfirm = (user: User) => {
     // removeTrainingUserHandler(id);
@@ -33,8 +34,20 @@ const List: React.FC<DispatchProps> = props => {
     }
   };
 
-  const editUserHandler = (user: User) => {
-    console.log(user);
+  const editUserConfirm = (user: User) => {
+    // removeTrainingUserHandler(id);
+    setUser(user);
+    setToogleEditUser(true);
+  };
+
+  const editUserConfirmHandler = (action: boolean) => {
+    if (action) {
+      const newUser = user ? user : new User();
+      editUserHandler(newUser);
+      setToogleEditUser(false);
+    } else {
+      setToogleEditUser(false);
+    }
   };
 
   return (
@@ -51,7 +64,7 @@ const List: React.FC<DispatchProps> = props => {
             </ItemHidden>
             <ItemHidden
               style={styles.itemHiddenAlign}
-              onPress={() => editUserHandler(item.item)}>
+              onPress={() => editUserConfirm(item.item)}>
               <Icon name="pencil" size={22} color={Colors.info_color} />
             </ItemHidden>
           </ContainerHidden>
@@ -63,6 +76,13 @@ const List: React.FC<DispatchProps> = props => {
           title="Deletar"
           text={`Deseja deletar o usuário ${user?.username}?`}
           action={deleteUserHandler}
+        />
+      )}
+      {toogleEditUser && (
+        <ConfirmDialog
+          title="Editar"
+          text={`Deseja editar o usuário ${user?.username}?`}
+          action={editUserConfirmHandler}
         />
       )}
     </>

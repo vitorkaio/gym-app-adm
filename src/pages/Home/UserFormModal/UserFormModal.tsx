@@ -8,8 +8,8 @@ import {
   Content,
   Forms,
   ImageInput,
-} from './AddUserModalStyle';
-import {DispatchProps} from './AddUserModalTypes';
+} from './UserFormModalStyle';
+import {DispatchProps} from './UserFormModalTypes';
 import Header from 'components/Header/Header';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Colors from 'components/styles/Colors';
@@ -20,42 +20,53 @@ const AddUserImage = require('components/styles/assets/add_user_wall.png');
 
 type Props = DispatchProps;
 
-const AddUserModal: React.FC<Props> = props => {
+const UserFormModal: React.FC<Props> = props => {
   const {
     visibleModalUser,
     toggleModalUser,
-    createUserLoading,
-    createUserErr,
-    createUserMsg,
-    createUserRequest,
-    createUserReset,
+    actionUserLoading,
+    actionUserSuccess,
+    actionUserErr,
+    actionUserMsg,
+    actionUserRequest,
+    actionUserReset,
+    user,
+    resetEdituser,
   } = props;
 
   const navigateGoBack = useCallback(() => {
-    createUserReset();
+    if (user) {
+      resetEdituser();
+    }
+    actionUserReset();
     toggleModalUser();
-  }, [createUserReset, toggleModalUser]);
+  }, [actionUserReset, toggleModalUser]);
 
   const addUserHandler = (student: CreateUser) => {
     console.log(student);
-    createUserRequest(student);
+    actionUserRequest(student);
+  };
+
+  const closeArrowLeft = () => {
+    resetEdituser();
+    toggleModalUser();
   };
 
   useEffect(() => {
-    if (createUserMsg === 'success') {
+    if (actionUserSuccess) {
       navigateGoBack();
     }
-  }, [createUserMsg, navigateGoBack]);
+  }, [actionUserSuccess, navigateGoBack]);
 
   return (
     <Modal
       visible={visibleModalUser}
-      onRequestClose={toggleModalUser}
+      onRequestClose={closeArrowLeft}
       animationType="slide"
       transparent={false}>
       <Container>
         <Header title="Adicionar Aluno">
-          <TouchableOpacity onPress={toggleModalUser}>
+          <TouchableOpacity onPress={closeArrowLeft}>
             <Icon name="arrow-left" size={25} color={Colors.primary_color} />
           </TouchableOpacity>
           {null}
@@ -67,12 +78,16 @@ const AddUserModal: React.FC<Props> = props => {
             </ImageInput>
             <UserForms
               onSubmit={addUserHandler}
-              createUserError={createUserErr}
-              createUserErrorMsg={createUserMsg}
+              actionUserError={actionUserErr}
+              actionUserErrorMsg={actionUserMsg}
+              edit={user ? true : false}
+              editUsername={user ? user.username : ''}
+              editPassword={user ? '*******' : ''}
+              editName={user ? user.info?.name : ''}
             />
           </Forms>
         </Content>
-        {createUserLoading && <LoadingDialog title="Adicionando Usuário" />}
+        {actionUserLoading && <LoadingDialog title={user ? 'Editar Usuário' : 'Adicionando Usuário'} />}
       </Container>
     </Modal>
   );
@@ -85,4 +100,4 @@ const AddUserModalStyle = StyleSheet.create({
   },
 });
 
-export default AddUserModal;
+export default UserFormModal;

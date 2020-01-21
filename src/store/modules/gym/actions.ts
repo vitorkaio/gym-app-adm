@@ -13,8 +13,8 @@ export const userError = () => action(GymTypes.USER_ERROR);
 // CREATE USER
 export const createUserRequest = (newUser: CreateUser) =>
   action(GymTypes.CREATE_USER_REQUEST, {newUser});
-export const createUserSuccess = (msg: string, users: User[]) =>
-  action(GymTypes.CREATE_USER_SUCCESS, {msg, users});
+export const createUserSuccess = (users: User[]) =>
+  action(GymTypes.CREATE_USER_SUCCESS, {users});
 export const createUserError = (err: string) =>
   action(GymTypes.CREATE_USER_ERROR, {err});
 export const createUserReset = () => action(GymTypes.CREATE_USER_RESET);
@@ -72,3 +72,12 @@ export const removeExerciseTrainingError = (msg: string) =>
   action(GymTypes.REMOVE_EXERCISE_TRAINING_ERROR, {msg});
 export const removeExerciseTrainingReset = () =>
   action(GymTypes.REMOVE_EXERCISE_TRAINING_RESET);
+
+// EDIT USER
+export const editUserRequest = (id: string, user: CreateUser) =>
+  action(GymTypes.EDIT_USER_REQUEST, {id, user});
+export const editUserSuccess = (users: User[]) =>
+  action(GymTypes.EDIT_USER_SUCCESS, {users});
+export const editUserError = (msg: string) =>
+  action(GymTypes.EDIT_USER_ERROR, {msg});
+export const editUserReset = () => action(GymTypes.EDIT_USER_RESET);

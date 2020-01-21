@@ -4,4 +4,5 @@ export interface DispatchProps {
   data: User[];
   select: (user: User) => void;
   removeUserHandler: (id: string) => void;
+  editUserHandler: (user: User) => void;
 }
