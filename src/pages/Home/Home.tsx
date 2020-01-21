@@ -30,12 +30,12 @@ const Home: React.FC<Props> = props => {
     createUserRequest,
     createUserReset,
     navigation,
+    removeUserLoadingData,
+    removeUserRequest,
+    removeUserReset,
+    removeUserSuccessDatas,
   } = props;
   const [visibleModalUser, setVisibleModalUser] = useState(false);
-
-  useEffect(() => {
-    usersRequest();
-  }, [usersRequest]);
 
   const addUserNavigate = () => {
     toggleVisibleModalUser();
@@ -55,6 +55,20 @@ const Home: React.FC<Props> = props => {
     createUserRequest(newUser);
   };
 
+  const removeUserHandler = (id: string) => {
+    removeUserRequest(id);
+  };
+
+  useEffect(() => {
+    usersRequest();
+  }, [usersRequest]);
+
+  useEffect(() => {
+    if (removeUserSuccessDatas) {
+      removeUserReset();
+    }
+  }, [removeUserSuccessDatas, removeUserReset]);
+
   console.log('Home - Render');
 
   return (
@@ -67,8 +81,13 @@ const Home: React.FC<Props> = props => {
         {usersLoadingData ? (
           <LoadingDialog title="Carregando Usuários" />
         ) : (
-          <List data={usersData} select={infoUserNavigate} />
+          <List
+            data={usersData}
+            select={infoUserNavigate}
+            removeUserHandler={removeUserHandler}
+          />
         )}
+        {removeUserLoadingData && <LoadingDialog title="Deletando Usuário" />}
       </Content>
       <Add onPressHandler={addUserNavigate} />
       {visibleModalUser ? (
@@ -93,6 +112,11 @@ const mapStateToProps = (state: ApplicationState) => ({
   createUserLoadingData: state.gymReducer.create_user_loading,
   createUserMsgData: state.gymReducer.create_user_msg,
   createUserErrorData: state.gymReducer.create_user_error,
+
+  removeUserSuccessData: state.gymReducer.remove_user_success,
+  removeUserLoadingData: state.gymReducer.remove_user_loading,
+  removeUserErrorData: state.gymReducer.remove_user_error,
+  removeUserErrorMsgData: state.gymReducer.remove_user_error_msg,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) =>

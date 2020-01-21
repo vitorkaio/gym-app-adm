@@ -25,7 +25,7 @@ const List: React.FC<DispatchProps> = props => {
 
   const deleteTrainingUserHandler = (action: boolean) => {
     if (action) {
-      removeTrainingUserHandler(training?._id);
+      removeTrainingUserHandler(training?._id ? training._id : '');
       setToggleConfim(false);
     } else {
       setToggleConfim(false);

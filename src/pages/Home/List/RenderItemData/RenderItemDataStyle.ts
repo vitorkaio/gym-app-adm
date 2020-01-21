@@ -11,6 +11,7 @@ export const Container = styled.TouchableOpacity`
   height: 60;
   flex-direction: row;
   border-radius: 1;
+  background-color: ${Colors.content_color};
 `;
 
 export const Mark = styled.View`
