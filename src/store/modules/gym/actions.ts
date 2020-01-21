@@ -81,3 +81,12 @@ export const editUserSuccess = (users: User[]) =>
 export const editUserError = (msg: string) =>
   action(GymTypes.EDIT_USER_ERROR, {msg});
 export const editUserReset = () => action(GymTypes.EDIT_USER_RESET);
+
+// EDIT TRAINING
+export const editTrainingRequest = (id: string, name: string) =>
+  action(GymTypes.EDIT_TRAINING_REQUEST, {id, name});
+export const editTrainingSuccess = (users: User[]) =>
+  action(GymTypes.EDIT_TRAINING_SUCCESS, {users});
+export const editTrainingError = (msg: string) =>
+  action(GymTypes.EDIT_TRAINING_ERROR, {msg});
+export const editTrainingReset = () => action(GymTypes.EDIT_TRAINING_RESET);

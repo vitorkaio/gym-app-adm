@@ -1,7 +1,7 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 import GymApi from 'services/GymApi';
 
-import User from 'models/User';
+import User, {Training} from 'models/User';
 import {
   userSuccess,
   userError,
@@ -19,6 +19,8 @@ import {
   removeExerciseTrainingError,
   editUserSuccess,
   editUserError,
+  editTrainingSuccess,
+  editTrainingError,
 } from './actions';
 import {
   GymTypes,
@@ -189,6 +191,29 @@ function* editUser(action: EditUserAction) {
   }
 }
 
+function* editTraining(action: UpdateAddTrainingUserAction) {
+  const {payload} = action;
+  try {
+    const training: Training = yield call(
+      GymApi.editTraining,
+      payload.id,
+      payload.name,
+    );
+    if (training) {
+      const users: User[] = yield call(GymApi.getUsers);
+      if (users) {
+        yield put(editTrainingSuccess(users));
+      } else {
+        yield put(editTrainingError('error'));
+      }
+    } else {
+      yield put(editTrainingError('error'));
+    }
+  } catch (error) {
+    yield put(editTrainingError('error'));
+  }
+}
+
 export default [
   takeLatest(GymTypes.USER_REQUEST, usersRequestLoad),
   takeLatest(GymTypes.CREATE_USER_REQUEST, createUserLoad),
@@ -198,4 +223,5 @@ export default [
   takeLatest(GymTypes.ADD_EXERCISE_TRAINING_REQUEST, addExerciseTraining),
   takeLatest(GymTypes.REMOVE_EXERCISE_TRAINING_REQUEST, removeExerciseTraining),
   takeLatest(GymTypes.EDIT_USER_REQUEST, editUser),
+  takeLatest(GymTypes.EDIT_TRAINING_REQUEST, editTraining),
 ];

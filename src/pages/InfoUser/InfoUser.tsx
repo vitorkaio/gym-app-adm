@@ -29,19 +29,23 @@ const InfoUser: React.FC<Props> = props => {
     updateAddTrainingUserRequest,
     updateAddTrainingUserReset,
     removeTrainingUserRequest,
-    removeTrainingUserReset,
-    removeTrainingUserSuccessgData,
     removeTrainingUserLoadingData,
+    editTrainingLoadingData,
+    editTrainingSuccessData,
+    editTrainingErrorData,
+    editTrainingErrorMsgData,
+    editTrainingRequest,
+    editTrainingReset,
     users,
   } = props;
   const [visibleModalAddTraining, setVisibleModalAddTraining] = useState(false);
+  const [editTraining, setEditTraining] = useState<Training>();
 
   const navigateGoBack = useCallback(() => {
     navigation.goBack();
   }, [navigation]);
 
   const infoTrainingNavigate = (training: Training) => {
-    console.log(training);
     shareDatas.idTraining = training._id;
     navigation.navigate('InfoTraining');
   };
@@ -62,12 +66,24 @@ const InfoUser: React.FC<Props> = props => {
     removeTrainingUserRequest(id ? id : '', idTraining);
   }
 
+  const editTrainingHandler = (training: Training) => {
+    setEditTraining(training);
+    toggleVisibleModalAddTraining();
+  };
+
+  const editTrainingReqHandler = (newTraining: string) => {
+    editTrainingRequest(editTraining!._id, newTraining);
+  };
+
+  const resetEditTraining = () => {
+    setEditTraining(undefined);
+  };
+
   const shareDatas = ShareDatas.getInstance();
   const user: User | undefined = shareDatas.getUser([...users]);
   const username = user?.username;
   const id = user?._id;
   const trainings = user?.trainings;
-  console.log(users);
   return (
     <Container>
       <Header title={username ? username : ''}>
@@ -77,20 +93,28 @@ const InfoUser: React.FC<Props> = props => {
         {null}
       </Header>
       <Content>
-        <List data={trainings ? trainings : []} select={infoTrainingNavigate} removeTrainingUserHandler={removeTrainingUserHandler} />
+        <List 
+          data={trainings ? trainings : []} 
+          editTrainingHandler={editTrainingHandler} 
+          select={infoTrainingNavigate} 
+          removeTrainingUserHandler={removeTrainingUserHandler} 
+        />
         {removeTrainingUserLoadingData && <LoadingDialog title="Removendo Treino" />}
       </Content>
       <Add onPressHandler={addTrainingNavigate} />
       {visibleModalAddTraining && (
         <TrainingFormModal
+          resetEditTraining={resetEditTraining}
           visibleModalAddTraining={visibleModalAddTraining}
           toggleModalAddTraining={toggleVisibleModalAddTraining}
-          addTrainingUserLoading={addTrainingUserLoadingData}
-          addTrainingUserSuccess={addTrainingUserSuccessData}
-          addTrainingUserErr={addTrainingUserErrorData}
-          addTrainingUserErrMsg={addTrainingUserErrorMsgData}
-          addTrainingUserRequest={addTrainingUserHandler}
-          addTrainingUserReset={updateAddTrainingUserReset}
+          actionTrainingUserLoading={editTraining ? editTrainingLoadingData : addTrainingUserLoadingData}
+          actionTrainingUserSuccess={editTraining ? editTrainingSuccessData : addTrainingUserSuccessData}
+          actionTrainingUserErr={editTraining ? editTrainingErrorData : addTrainingUserErrorData}
+          actionTrainingUserErrMsg={editTraining ? editTrainingErrorMsgData : addTrainingUserErrorMsgData}
+          actionTrainingUserRequest={editTraining ? editTrainingReqHandler : addTrainingUserHandler}
+          actionTrainingUserReset={editTraining ? editTrainingReset : updateAddTrainingUserReset}
+          edit={editTraining ? true : false}
+          training={editTraining ? editTraining : null}
         />
       )}
     </Container>
@@ -108,6 +132,11 @@ const mapStateToProps = (state: ApplicationState) => ({
   removeTrainingUserSuccessgData: state.gymReducer.remove_training_user_success,
   removeTrainingUserErrorData: state.gymReducer.remove_training_user_error,
   removeTrainingUserErrorMsgData: state.gymReducer.remove_training_user_error_msg,
+
+  editTrainingLoadingData: state.gymReducer.edit_training_loading,
+  editTrainingSuccessData: state.gymReducer.edit_training_success,
+  editTrainingErrorData: state.gymReducer.edit_training_error,
+  editTrainingErrorMsgData: state.gymReducer.edit_training_error_msg,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) =>

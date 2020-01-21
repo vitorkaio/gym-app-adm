@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, TouchableWithoutFeedback} from 'react-native';
 import {
   Container,
   Mark,
@@ -21,7 +21,7 @@ interface DispatchProps {
 
 const RenderItemData: React.FC<DispatchProps> = props => {
   const {item, select} = props;
-  return (
+  const Content = (
     <Container onPress={() => select(item)} style={styles.container}>
       <Mark>
         <Image source={Usericon} />
@@ -33,6 +33,13 @@ const RenderItemData: React.FC<DispatchProps> = props => {
         <Icon name="arrow-right" size={25} color={Colors.primary_color} />
       </RightComponent>
     </Container>
+  );
+  return (
+    <TouchableWithoutFeedback
+      onPress={() => select(item)}
+      style={styles.container}>
+      {Content}
+    </TouchableWithoutFeedback>
   );
 };
 

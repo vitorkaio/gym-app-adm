@@ -123,6 +123,20 @@ class GymApi {
       throw error;
     }
   };
+
+  static editTraining = async (id: string, name: string): Promise<Training> => {
+    try {
+      const res: AxiosResponse<ResData> = await axios.patch(
+        `${URL}/trainings/${id}`,
+        {name},
+      );
+      const training: Training = res.data.data as Training;
+      return training;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
 }
 
 export default GymApi;

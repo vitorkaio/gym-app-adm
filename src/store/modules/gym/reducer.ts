@@ -41,6 +41,11 @@ const INITIAL_STATE: GymState = {
   edit_user_loading: false,
   edit_user_error: false,
   edit_user_error_msg: '',
+
+  edit_training_success: false,
+  edit_training_loading: false,
+  edit_training_error: false,
+  edit_training_error_msg: '',
 };
 
 const gymReducer: Reducer<GymState> = produce(
@@ -272,6 +277,36 @@ const gymReducer: Reducer<GymState> = produce(
         draft.edit_user_loading = false;
         draft.edit_user_error = false;
         draft.edit_user_error_msg = '';
+        break;
+
+      // ********************* EDIT TRAINING *********************
+      case GymTypes.EDIT_TRAINING_REQUEST:
+        draft.edit_training_loading = true;
+        draft.edit_training_success = false;
+        draft.edit_training_error = false;
+        draft.edit_training_error_msg = '';
+        break;
+
+      case GymTypes.EDIT_TRAINING_SUCCESS:
+        draft.users = payload.users;
+        draft.edit_training_success = true;
+        draft.edit_training_loading = false;
+        draft.edit_training_error = false;
+        draft.edit_training_error_msg = '';
+        break;
+
+      case GymTypes.EDIT_TRAINING_ERROR:
+        draft.edit_training_success = false;
+        draft.edit_training_loading = false;
+        draft.edit_training_error = true;
+        draft.edit_training_error_msg = payload.msg;
+        break;
+
+      case GymTypes.EDIT_TRAINING_RESET:
+        draft.edit_training_success = false;
+        draft.edit_training_loading = false;
+        draft.edit_training_error = false;
+        draft.edit_training_error_msg = '';
         break;
 
       default:

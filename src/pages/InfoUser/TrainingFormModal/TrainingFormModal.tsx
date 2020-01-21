@@ -21,40 +21,55 @@ type Props = DispatchProps;
 
 const AddTrainingUserModal: React.FC<Props> = props => {
   const {
-    addTrainingUserLoading,
-    addTrainingUserSuccess,
-    addTrainingUserErr,
-    addTrainingUserErrMsg,
+    actionTrainingUserLoading,
+    actionTrainingUserSuccess,
+    actionTrainingUserErr,
+    actionTrainingUserErrMsg,
     visibleModalAddTraining,
     toggleModalAddTraining,
-    addTrainingUserRequest,
-    addTrainingUserReset,
+    actionTrainingUserRequest,
+    actionTrainingUserReset,
+    training,
+    resetEditTraining,
   } = props;
 
   const navigateGoBack = useCallback(() => {
-    addTrainingUserReset();
+    if (training) {
+      resetEditTraining();
+    }
+    actionTrainingUserReset();
     toggleModalAddTraining();
-  }, [addTrainingUserReset, toggleModalAddTraining]);
+  }, [
+    actionTrainingUserReset,
+    resetEditTraining,
+    toggleModalAddTraining,
+    training,
+  ]);
 
   const addUserHandler = (name: string) => {
-    addTrainingUserRequest(name);
+    actionTrainingUserRequest(name);
+  };
+
+  const closeArrowLeft = () => {
+    resetEditTraining();
+    toggleModalAddTraining();
   };
 
   useEffect(() => {
-    if (addTrainingUserSuccess) {
+    if (actionTrainingUserSuccess) {
       navigateGoBack();
     }
-  }, [addTrainingUserSuccess, navigateGoBack]);
+  }, [actionTrainingUserSuccess, navigateGoBack]);
 
   return (
     <Modal
       visible={visibleModalAddTraining}
-      onRequestClose={toggleModalAddTraining}
+      onRequestClose={closeArrowLeft}
       animationType="slide"
       transparent={false}>
       <Container>
         <Header title="Adicionar Treino">
-          <TouchableOpacity onPress={toggleModalAddTraining}>
+          <TouchableOpacity onPress={closeArrowLeft}>
             <Icon name="arrow-left" size={25} color={Colors.primary_color} />
           </TouchableOpacity>
           {null}
@@ -66,12 +81,18 @@ const AddTrainingUserModal: React.FC<Props> = props => {
             </ImageInput>
             <TrainingForms
               onSubmit={addUserHandler}
-              trainingError={addTrainingUserErr}
-              trainingErrorMsg={addTrainingUserErrMsg}
+              trainingError={actionTrainingUserErr}
+              trainingErrorMsg={actionTrainingUserErrMsg}
+              edit={training ? true : false}
+              editName={training ? training.name : ''}
             />
           </Forms>
         </Content>
-        {addTrainingUserLoading && <LoadingDialog title="Adicionando Treino" />}
+        {actionTrainingUserLoading && (
+          <LoadingDialog
+            title={training ? 'Editando Treino' : 'Adicionando Treino'}
+          />
+        )}
       </Container>
     </Modal>
   );

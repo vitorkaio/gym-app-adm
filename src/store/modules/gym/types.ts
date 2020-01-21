@@ -44,6 +44,11 @@ export enum GymTypes {
   EDIT_USER_SUCCESS = '@gym/EDIT_USER_SUCCESS',
   EDIT_USER_ERROR = '@gym/EDIT_USER_ERROR',
   EDIT_USER_RESET = '@gym/EDIT_USER_RESET',
+
+  EDIT_TRAINING_REQUEST = '@gym/EDIT_TRAINING_REQUEST',
+  EDIT_TRAINING_SUCCESS = '@gym/EDIT_TRAINING_SUCCESS',
+  EDIT_TRAINING_ERROR = '@gym/EDIT_TRAINING_ERROR',
+  EDIT_TRAINING_RESET = '@gym/EDIT_TRAINING_RESET',
 }
 
 export interface GymState {
@@ -85,6 +90,11 @@ export interface GymState {
   edit_user_success: boolean;
   edit_user_error: boolean;
   edit_user_error_msg: string;
+
+  edit_training_loading: boolean;
+  edit_training_success: boolean;
+  edit_training_error: boolean;
+  edit_training_error_msg: string;
 }
 
 export interface CreateUserAction extends Action {

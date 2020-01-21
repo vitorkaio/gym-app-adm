@@ -13,8 +13,9 @@ import {ContainerHidden, ItemHidden} from './ListStyle';
 import ConfirmDialog from 'components/Dialogs/Confirm/ConfirmDialog';
 
 const List: React.FC<DispatchProps> = props => {
-  const {data, removeTrainingUserHandler} = props;
+  const {data, removeTrainingUserHandler, editTrainingHandler} = props;
   const [toggleConfim, setToggleConfim] = useState(false);
+  const [toggleEditConfim, setToggleEditConfim] = useState(false);
   const [training, setTraining] = useState<Training>();
 
   const deleteTrainingConfirm = (training: Training) => {
@@ -32,8 +33,20 @@ const List: React.FC<DispatchProps> = props => {
     }
   };
 
-  const editTrainingHandler = (training: Training) => {
-    console.log(training);
+  const editTrainingConfirm = (training: Training) => {
+    // removeTrainingUserHandler(id);
+    setTraining(training);
+    setToggleEditConfim(true);
+  };
+
+  const editTrainingUserHandler = (action: boolean) => {
+    if (action) {
+      const newTraining: Training = training!;
+      editTrainingHandler(newTraining);
+      setToggleEditConfim(false);
+    } else {
+      setToggleEditConfim(false);
+    }
   };
 
   return (
@@ -50,7 +63,7 @@ const List: React.FC<DispatchProps> = props => {
             </ItemHidden>
             <ItemHidden
               style={styles.itemHiddenAlign}
-              onPress={() => editTrainingHandler(item.item)}>
+              onPress={() => editTrainingConfirm(item.item)}>
               <Icon name="pencil" size={22} color={Colors.info_color} />
             </ItemHidden>
           </ContainerHidden>
@@ -62,6 +75,13 @@ const List: React.FC<DispatchProps> = props => {
           title="Deletar"
           text={`Deseja deletar o treino ${training?.name}?`}
           action={deleteTrainingUserHandler}
+        />
+      )}
+      {toggleEditConfim && (
+        <ConfirmDialog
+          title="Editar"
+          text={`Deseja editar o treino ${training?.name}?`}
+          action={editTrainingUserHandler}
         />
       )}
     </>

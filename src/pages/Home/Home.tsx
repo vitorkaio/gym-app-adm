@@ -91,7 +91,7 @@ const Home: React.FC<Props> = props => {
     }
   }, [removeUserSuccessDatas, removeUserReset]);
 
-  console.log('Home - Render');
+  // console.log('Home - Render');
 
   return (
     <Container>
