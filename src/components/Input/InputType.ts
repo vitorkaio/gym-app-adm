@@ -4,6 +4,7 @@ export type KeyboardType =
   | 'default'
   | 'email-address'
   | 'numeric'
+  | 'number-pad'
   | 'phone-pad';
 
 export interface DispatchProps extends TextInputProps {

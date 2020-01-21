@@ -2,7 +2,7 @@ import {action} from 'typesafe-actions';
 
 import User from 'models/User';
 import {GymTypes} from './types';
-import {CreateUser} from 'models/TypesAux';
+import {CreateUser, AddExercise} from 'models/TypesAux';
 
 // REQUEST *** USER ***
 export const usersRequest = () => action(GymTypes.USER_REQUEST);
@@ -47,3 +47,28 @@ export const removeTrainingUserError = (msg: string) =>
   action(GymTypes.REMOVE_TRAINING_USER_ERROR, {msg});
 export const removeTrainingUserReset = () =>
   action(GymTypes.REMOVE_TRAINING_USER_RESET);
+
+// ADD EXERCISE TRAINING
+export const addExerciseTrainingRequest = (
+  idTraining: string,
+  exercise: AddExercise,
+) => action(GymTypes.ADD_EXERCISE_TRAINING_REQUEST, {idTraining, exercise});
+export const addExerciseTrainingSuccess = (users: User[]) =>
+  action(GymTypes.ADD_EXERCISE_TRAINING_SUCCESS, {users});
+export const addExerciseTrainingError = (msg: string) =>
+  action(GymTypes.ADD_EXERCISE_TRAINING_ERROR, {msg});
+export const addExerciseTrainingReset = () =>
+  action(GymTypes.ADD_EXERCISE_TRAINING_RESET);
+
+// REMOVE EXERCISE TRAINING
+export const removeExerciseTrainingRequest = (
+  idTraining: string,
+  idExercise: string,
+) =>
+  action(GymTypes.REMOVE_EXERCISE_TRAINING_REQUEST, {idTraining, idExercise});
+export const removeExerciseTrainingSuccess = (users: User[]) =>
+  action(GymTypes.REMOVE_EXERCISE_TRAINING_SUCCESS, {users});
+export const removeExerciseTrainingError = (msg: string) =>
+  action(GymTypes.REMOVE_EXERCISE_TRAINING_ERROR, {msg});
+export const removeExerciseTrainingReset = () =>
+  action(GymTypes.REMOVE_EXERCISE_TRAINING_RESET);

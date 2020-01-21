@@ -9,7 +9,7 @@ export const Container = styled.View`
 export const ContainerHidden = styled.View`
   flex: 1;
   align-items: center;
-  flex-direction: row-reverse;
+  flex-direction: row;
   padding-left: 15;
   margin-top: 12;
 `;

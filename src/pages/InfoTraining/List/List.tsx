@@ -13,19 +13,19 @@ import {ContainerHidden, ItemHidden} from './ListStyle';
 import ConfirmDialog from 'components/Dialogs/Confirm/ConfirmDialog';
 
 const List: React.FC<DispatchProps> = props => {
-  const {data} = props;
+  const {data, removeExerciseTrainingUserHandler} = props;
   const [toggleConfim, setToggleConfim] = useState(false);
-  const [exercise, setExercise] = useState<Exercise>();
+  const [exerciseDelete, setExerciseDelete] = useState<Exercise>();
 
   const deleteExerciseConfirm = (exercise: Exercise) => {
     // removeTrainingUserHandler(id);
-    setExercise(exercise);
+    setExerciseDelete(exercise);
     setToggleConfim(true);
   };
 
   const deleteExerciseUserHandler = (action: boolean) => {
     if (action) {
-      // removeTrainingUserHandler(training?._id);
+      removeExerciseTrainingUserHandler(exerciseDelete!._id);
       setToggleConfim(false);
     } else {
       setToggleConfim(false);
@@ -55,12 +55,12 @@ const List: React.FC<DispatchProps> = props => {
             </ItemHidden>
           </ContainerHidden>
         )}
-        rightOpenValue={-80}
+        leftOpenValue={80}
       />
       {toggleConfim && (
         <ConfirmDialog
           title="Deletar"
-          text={`Deseja deletar o Exercício ${exercise?.exercise}?`}
+          text={`Deseja deletar o Exercício ${exerciseDelete?.exercise}?`}
           action={deleteExerciseUserHandler}
         />
       )}
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     height: 50,
   },
   itemHiddenAlign: {
-    marginRight: 15,
+    marginLeft: 15,
   },
 });
 

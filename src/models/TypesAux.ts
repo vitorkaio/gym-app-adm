@@ -6,3 +6,12 @@ export interface CreateUser {
     name?: string;
   };
 }
+
+export interface AddExercise {
+  exercise?: string;
+  number?: number;
+  weight?: number;
+  repetitions?: number;
+  time?: string;
+  obs?: string;
+}

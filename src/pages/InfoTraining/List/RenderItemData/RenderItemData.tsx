@@ -1,15 +1,15 @@
 import React from 'react';
-import {StyleSheet, TouchableWithoutFeedback} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {
   Container,
- ListWrapper,
- ListTitle,
- ListContent,
- ListFooter,
- ItemContent,
- ItemText,
- FooterItemText,
- Title
+  ListWrapper,
+  ListTitle,
+  ListContent,
+  ListFooter,
+  ItemContent,
+  ItemText,
+  FooterItemText,
+  Title,
 } from './RenderItemDataStyle';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -22,47 +22,34 @@ interface DispatchProps {
 
 const RenderItemData: React.FC<DispatchProps> = props => {
   const {item} = props;
-  const Content = (
+  return (
     <Container style={styles.container}>
       <ListWrapper>
         <ListTitle>
-          <Title>
-            { item.exercise }
-          </Title>
+          <Title>{item.exercise}</Title>
         </ListTitle>
         <ListContent>
           <ItemContent>
             <Icon name="counter" size={18} color={Colors.primary_color} />
             <ItemText>
-              { item.number }s de { item.repetitions }
+              {item.number}s de {item.repetitions}
             </ItemText>
           </ItemContent>
           <ItemContent>
             <Icon name="weight" size={18} color={Colors.primary_color} />
-            <ItemText>
-              { item.weight }
-            </ItemText>
+            <ItemText>{item.weight}</ItemText>
           </ItemContent>
           <ItemContent>
             <Icon name="alarm" size={18} color={Colors.primary_color} />
-            <ItemText>
-              { item.time }
-            </ItemText>
+            <ItemText>{item.time}</ItemText>
           </ItemContent>
         </ListContent>
 
         <ListFooter>
-          <FooterItemText>
-            { item.obs }
-          </FooterItemText>
+          <FooterItemText>{item.obs}</FooterItemText>
         </ListFooter>
       </ListWrapper>
     </Container>
-  );
-  return (
-    <TouchableWithoutFeedback>
-      {Content}
-    </TouchableWithoutFeedback>
   );
 };
 

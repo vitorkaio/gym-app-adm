@@ -1,4 +1,4 @@
-import User from 'models/User';
+import User, {Exercise} from 'models/User';
 import {Action} from 'redux';
 import {CreateUser} from 'models/TypesAux';
 
@@ -29,6 +29,16 @@ export enum GymTypes {
   REMOVE_TRAINING_USER_SUCCESS = '@gym/REMOVE_TRAINING_USER_SUCCESS',
   REMOVE_TRAINING_USER_ERROR = '@gym/REMOVE_TRAINING_USER_ERROR',
   REMOVE_TRAINING_USER_RESET = '@gym/REMOVE_TRAINING_USER_RESET',
+
+  ADD_EXERCISE_TRAINING_REQUEST = '@gym/ADD_EXERCISE_TRAINING_REQUEST',
+  ADD_EXERCISE_TRAINING_SUCCESS = '@gym/ADD_EXERCISE_TRAINING_SUCCESS',
+  ADD_EXERCISE_TRAINING_ERROR = '@gym/ADD_EXERCISE_TRAINING_ERROR',
+  ADD_EXERCISE_TRAINING_RESET = '@gym/ADD_EXERCISE_TRAINING_RESET',
+
+  REMOVE_EXERCISE_TRAINING_REQUEST = '@gym/REMOVE_EXERCISE_TRAINING_REQUEST',
+  REMOVE_EXERCISE_TRAINING_SUCCESS = '@gym/REMOVE_EXERCISE_TRAINING_SUCCESS',
+  REMOVE_EXERCISE_TRAINING_ERROR = '@gym/REMOVE_EXERCISE_TRAINING_ERROR',
+  REMOVE_EXERCISE_TRAINING_RESET = '@gym/REMOVE_EXERCISE_TRAINING_RESET',
 }
 
 export interface GymState {
@@ -54,6 +64,16 @@ export interface GymState {
   remove_training_user_success: boolean;
   remove_training_user_error: boolean;
   remove_training_user_error_msg: string;
+
+  add_exercise_training_loading: boolean;
+  add_exercise_training_success: boolean;
+  add_exercise_training_error: boolean;
+  add_exercise_training_error_msg: string;
+
+  remove_exercise_training_loading: boolean;
+  remove_exercise_training_success: boolean;
+  remove_exercise_training_error: boolean;
+  remove_exercise_training_error_msg: string;
 }
 
 export interface CreateUserAction extends Action {
@@ -79,6 +99,20 @@ export interface RemoveTrainingUserAction extends Action {
   payload: {
     idUser: string;
     idTraining: string;
+  };
+}
+
+export interface AddExerciseTrainingAction extends Action {
+  payload: {
+    idTraining: string;
+    exercise: Exercise;
+  };
+}
+
+export interface RemoveExerciseTrainingAction extends Action {
+  payload: {
+    idTraining: string;
+    idExercise: string;
   };
 }
 

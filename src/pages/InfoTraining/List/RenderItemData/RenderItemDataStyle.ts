@@ -2,16 +2,14 @@ import styled from 'styled-components/native';
 import Colors from 'components/styles/Colors';
 
 export const Container = styled.View`
-  flex: 1;
   background-color: ${Colors.content_color};
 `;
 
 export const ListWrapper = styled.View`
   margin: 10px 10px;
-  height: auto;
   flex-direction: column;
   border-bottom-width: 0.4px;
-  border-color: black;
+  border-color: ${Colors.divider_color};
 `;
 
 export const ListTitle = styled.View`
@@ -44,7 +42,8 @@ export const ItemContent = styled.View`
 export const ItemText = styled.Text`
   font-size: 12;
   font-weight: 800;
-  color: white;
+  color: ${Colors.text_color};
+  margin-left: 5px;
 `;
 
 export const ListFooter = styled.View`

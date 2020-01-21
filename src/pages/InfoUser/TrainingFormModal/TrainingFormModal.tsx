@@ -19,7 +19,7 @@ const AddTrainingImage = require('components/styles/assets/training_wall.png');
 
 type Props = DispatchProps;
 
-const AddUserModal: React.FC<Props> = props => {
+const AddTrainingUserModal: React.FC<Props> = props => {
   const {
     addTrainingUserLoading,
     addTrainingUserSuccess,
@@ -84,4 +84,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddUserModal;
+export default AddTrainingUserModal;

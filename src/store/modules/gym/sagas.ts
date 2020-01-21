@@ -13,6 +13,10 @@ import {
   updateAddTrainingUserError,
   removeTrainingUserSuccess,
   removeTrainingUserError,
+  addExerciseTrainingSuccess,
+  addExerciseTrainingError,
+  removeExerciseTrainingSuccess,
+  removeExerciseTrainingError,
 } from './actions';
 import {
   GymTypes,
@@ -20,6 +24,8 @@ import {
   RemoveUserAction,
   UpdateAddTrainingUserAction,
   RemoveTrainingUserAction,
+  AddExerciseTrainingAction,
+  RemoveExerciseTrainingAction,
 } from './types';
 
 function* usersRequestLoad() {
@@ -115,10 +121,58 @@ function* removeTrainingUser(action: RemoveTrainingUserAction) {
   }
 }
 
+function* addExerciseTraining(action: AddExerciseTrainingAction) {
+  const {payload} = action;
+  try {
+    const user: User = yield call(
+      GymApi.addExerciseTraining,
+      payload.idTraining,
+      payload.exercise,
+    );
+    if (user) {
+      const users: User[] = yield call(GymApi.getUsers);
+      if (users) {
+        yield put(addExerciseTrainingSuccess(users));
+      } else {
+        yield put(addExerciseTrainingError('error'));
+      }
+    } else {
+      yield put(addExerciseTrainingError('error'));
+    }
+  } catch (error) {
+    yield put(addExerciseTrainingError('error'));
+  }
+}
+
+function* removeExerciseTraining(action: RemoveExerciseTrainingAction) {
+  const {payload} = action;
+  try {
+    const user: User = yield call(
+      GymApi.removeExerciseTraining,
+      payload.idTraining,
+      payload.idExercise,
+    );
+    if (user) {
+      const users: User[] = yield call(GymApi.getUsers);
+      if (users) {
+        yield put(removeExerciseTrainingSuccess(users));
+      } else {
+        yield put(removeExerciseTrainingError('error'));
+      }
+    } else {
+      yield put(removeExerciseTrainingError('error'));
+    }
+  } catch (error) {
+    yield put(removeExerciseTrainingError('error'));
+  }
+}
+
 export default [
   takeLatest(GymTypes.USER_REQUEST, usersRequestLoad),
   takeLatest(GymTypes.CREATE_USER_REQUEST, createUserLoad),
   takeLatest(GymTypes.REMOVE_USERS_REQUEST, removeUserLoad),
   takeLatest(GymTypes.UPDATE_ADD_TRAINING_USER_REQUEST, updateAddTrainingUser),
   takeLatest(GymTypes.REMOVE_TRAINING_USER_REQUEST, removeTrainingUser),
+  takeLatest(GymTypes.ADD_EXERCISE_TRAINING_REQUEST, addExerciseTraining),
+  takeLatest(GymTypes.REMOVE_EXERCISE_TRAINING_REQUEST, removeExerciseTraining),
 ];

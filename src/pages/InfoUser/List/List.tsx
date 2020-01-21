@@ -55,7 +55,7 @@ const List: React.FC<DispatchProps> = props => {
             </ItemHidden>
           </ContainerHidden>
         )}
-        rightOpenValue={-80}
+        leftOpenValue={80}
       />
       {toggleConfim && (
         <ConfirmDialog
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     height: 50,
   },
   itemHiddenAlign: {
-    marginRight: 15,
+    marginLeft: 15,
   },
 });
 

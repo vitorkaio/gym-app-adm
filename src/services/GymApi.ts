@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from 'axios';
-import User from 'models/User';
+import User, {Exercise, Training} from 'models/User';
 import {CreateUser} from 'models/TypesAux';
 
 const URL: string = 'http://192.168.1.112:3333';
@@ -7,7 +7,7 @@ const URL: string = 'http://192.168.1.112:3333';
 interface ResData {
   msg: string;
   code: number;
-  data: User | User[];
+  data: User | User[] | Training;
 }
 
 class GymApi {
@@ -66,12 +66,44 @@ class GymApi {
     idTraining: string,
   ): Promise<User> => {
     try {
-      console.log(idUser, idTraining);
       const res: AxiosResponse<ResData> = await axios.patch(
         `${URL}/users/${idUser}/remove/training/${idTraining}`,
       );
       const user: User = res.data.data as User;
       return user;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+
+  static addExerciseTraining = async (
+    idTraining: string,
+    exercise: Exercise,
+  ): Promise<Training> => {
+    try {
+      const res: AxiosResponse<ResData> = await axios.patch(
+        `${URL}/trainings/${idTraining}/add/exercises`,
+        exercise,
+      );
+      const training: Training = res.data.data as Training;
+      return training;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+
+  static removeExerciseTraining = async (
+    idTraining: string,
+    idExercise: string,
+  ): Promise<Training> => {
+    try {
+      const res: AxiosResponse<ResData> = await axios.patch(
+        `${URL}/trainings/${idTraining}/remove/exercise/${idExercise}`,
+      );
+      const training: Training = res.data.data as Training;
+      return training;
     } catch (error) {
       console.log(error);
       throw error;

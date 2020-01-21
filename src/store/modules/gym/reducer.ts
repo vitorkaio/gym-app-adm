@@ -25,6 +25,16 @@ const INITIAL_STATE: GymState = {
   remove_training_user_loading: false,
   remove_training_user_error: false,
   remove_training_user_error_msg: '',
+
+  add_exercise_training_success: false,
+  add_exercise_training_loading: false,
+  add_exercise_training_error: false,
+  add_exercise_training_error_msg: '',
+
+  remove_exercise_training_success: false,
+  remove_exercise_training_loading: false,
+  remove_exercise_training_error: false,
+  remove_exercise_training_error_msg: '',
 };
 
 const gymReducer: Reducer<GymState> = produce(
@@ -163,6 +173,66 @@ const gymReducer: Reducer<GymState> = produce(
         draft.remove_training_user_loading = false;
         draft.remove_training_user_error = false;
         draft.remove_training_user_error_msg = '';
+        break;
+
+      // ********************* ADD EXERCISE TRAINING *********************
+      case GymTypes.ADD_EXERCISE_TRAINING_REQUEST:
+        draft.add_exercise_training_loading = true;
+        draft.add_exercise_training_success = false;
+        draft.add_exercise_training_error = false;
+        draft.add_exercise_training_error_msg = '';
+        break;
+
+      case GymTypes.ADD_EXERCISE_TRAINING_SUCCESS:
+        draft.users = payload.users;
+        draft.add_exercise_training_success = true;
+        draft.add_exercise_training_loading = false;
+        draft.add_exercise_training_error = false;
+        draft.add_exercise_training_error_msg = '';
+        break;
+
+      case GymTypes.ADD_EXERCISE_TRAINING_ERROR:
+        draft.add_exercise_training_success = false;
+        draft.add_exercise_training_loading = false;
+        draft.add_exercise_training_error = true;
+        draft.add_exercise_training_error_msg = payload.msg;
+        break;
+
+      case GymTypes.ADD_EXERCISE_TRAINING_RESET:
+        draft.add_exercise_training_success = false;
+        draft.add_exercise_training_loading = false;
+        draft.add_exercise_training_error = false;
+        draft.add_exercise_training_error_msg = '';
+        break;
+
+      // ********************* REMOVE EXERCISE TRAINING *********************
+      case GymTypes.REMOVE_EXERCISE_TRAINING_REQUEST:
+        draft.remove_exercise_training_loading = true;
+        draft.remove_exercise_training_success = false;
+        draft.remove_exercise_training_error = false;
+        draft.remove_exercise_training_error_msg = '';
+        break;
+
+      case GymTypes.REMOVE_EXERCISE_TRAINING_SUCCESS:
+        draft.users = payload.users;
+        draft.remove_exercise_training_success = true;
+        draft.remove_exercise_training_loading = false;
+        draft.remove_exercise_training_error = false;
+        draft.remove_exercise_training_error_msg = '';
+        break;
+
+      case GymTypes.REMOVE_EXERCISE_TRAINING_ERROR:
+        draft.remove_exercise_training_success = false;
+        draft.remove_exercise_training_loading = false;
+        draft.remove_exercise_training_error = true;
+        draft.remove_exercise_training_error_msg = payload.msg;
+        break;
+
+      case GymTypes.REMOVE_EXERCISE_TRAINING_RESET:
+        draft.remove_exercise_training_success = false;
+        draft.remove_exercise_training_loading = false;
+        draft.remove_exercise_training_error = false;
+        draft.remove_exercise_training_error_msg = '';
         break;
 
       default:

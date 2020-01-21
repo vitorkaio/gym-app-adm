@@ -6,6 +6,7 @@ enum Colors {
   delete_color = '#ff616f',
   info_color = '#448aff',
   text_color = '#fff',
+  divider_color = '#4c4c4c',
   text_color_dark = '#303030',
   label_color = '#adadad',
   content_color = '#303030',
