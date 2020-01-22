@@ -21,6 +21,8 @@ import {
   editUserError,
   editTrainingSuccess,
   editTrainingError,
+  editExerciseSuccess,
+  editExerciseError,
 } from './actions';
 import {
   GymTypes,
@@ -31,6 +33,7 @@ import {
   AddExerciseTrainingAction,
   RemoveExerciseTrainingAction,
   EditUserAction,
+  EditExerciseAction,
 } from './types';
 
 function* usersRequestLoad() {
@@ -214,6 +217,30 @@ function* editTraining(action: UpdateAddTrainingUserAction) {
   }
 }
 
+function* editExercise(action: EditExerciseAction) {
+  const {payload} = action;
+  try {
+    const training: Training = yield call(
+      GymApi.editExercise,
+      payload.idTraining,
+      payload.idExercise,
+      payload.exercise,
+    );
+    if (training) {
+      const users: User[] = yield call(GymApi.getUsers);
+      if (users) {
+        yield put(editExerciseSuccess(users));
+      } else {
+        yield put(editExerciseError('error'));
+      }
+    } else {
+      yield put(editExerciseError('error'));
+    }
+  } catch (error) {
+    yield put(editExerciseError('error'));
+  }
+}
+
 export default [
   takeLatest(GymTypes.USER_REQUEST, usersRequestLoad),
   takeLatest(GymTypes.CREATE_USER_REQUEST, createUserLoad),
@@ -224,4 +251,5 @@ export default [
   takeLatest(GymTypes.REMOVE_EXERCISE_TRAINING_REQUEST, removeExerciseTraining),
   takeLatest(GymTypes.EDIT_USER_REQUEST, editUser),
   takeLatest(GymTypes.EDIT_TRAINING_REQUEST, editTraining),
+  takeLatest(GymTypes.EDIT_EXERCISE_REQUEST, editExercise),
 ];

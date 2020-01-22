@@ -90,3 +90,15 @@ export const editTrainingSuccess = (users: User[]) =>
 export const editTrainingError = (msg: string) =>
   action(GymTypes.EDIT_TRAINING_ERROR, {msg});
 export const editTrainingReset = () => action(GymTypes.EDIT_TRAINING_RESET);
+
+// EDIT EXERCISE
+export const editExerciseRequest = (
+  idTraining: string,
+  idExercise: string,
+  exercise: AddExercise,
+) => action(GymTypes.EDIT_EXERCISE_REQUEST, {idTraining, idExercise, exercise});
+export const editExerciseSuccess = (users: User[]) =>
+  action(GymTypes.EDIT_EXERCISE_SUCCESS, {users});
+export const editExerciseError = (msg: string) =>
+  action(GymTypes.EDIT_EXERCISE_ERROR, {msg});
+export const editExerciseReset = () => action(GymTypes.EDIT_EXERCISE_RESET);

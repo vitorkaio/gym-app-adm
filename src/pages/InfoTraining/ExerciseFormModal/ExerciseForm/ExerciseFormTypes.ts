@@ -9,8 +9,8 @@ export interface DispatchProps {
   editTime?: string;
   editObs?: string;
 
-  addExerciseError: boolean;
-  addExerciseErrorMsg: string;
+  exerciseError: boolean;
+  exerciseErrorMsg: string;
   onSubmit: (newExercise: AddExercise) => void;
 }
 

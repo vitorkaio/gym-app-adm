@@ -1,17 +1,23 @@
 import {AddExercise} from 'models/TypesAux';
+import {Exercise} from 'models/User';
 
 // import {NavigationStackProp} from 'react-navigation-stack';
 
-export interface DispatchProps {
+export interface State {
   visibleModalAddExercise: boolean;
+  actionExerciseTrainingLoading: boolean;
+  actionExerciseTrainingSuccess: boolean;
+  actionExerciseTrainingErrMsg: string;
+  actionExerciseTrainingErr: boolean;
+
+  exercise: Exercise | null;
+}
+
+export interface DispatchProps {
   toggleModalAddExercise: () => void;
+  actionExerciseTrainingRequest: (exercise: AddExercise) => void;
+  actionExerciseTrainingReset: () => void;
 
-  addExerciseTrainingLoading: boolean;
-  addExerciseTrainingSuccess: boolean;
-  addExerciseTrainingErrMsg: string;
-  addExerciseTrainingErr: boolean;
-  addExerciseTrainingRequest: (exercise: AddExercise) => void;
-  addExerciseTrainingReset: () => void;
-
+  resetEditExercise: () => void;
   // navigation: NavigationStackProp;
 }

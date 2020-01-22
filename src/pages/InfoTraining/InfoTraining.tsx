@@ -23,6 +23,7 @@ type Props = DispatchProps & StateProps;
 
 const InfoTraining: React.FC<Props> = props => {
   const [visibleAddExerciseModal, setVisibleAddExerciseModal] = useState(false);
+  const [editExercise, setEditExercise] = useState<Exercise>();
   const {
     navigation, 
     users, 
@@ -34,6 +35,12 @@ const InfoTraining: React.FC<Props> = props => {
     addExerciseTrainingReset,
     removeExerciseTrainingLoadingData,
     removeExerciseTrainingRequest,
+    editExerciseLoadingData,
+    editExerciseSuccessData,
+    editExerciseErrorData,
+    editExerciseErrorMsgData,
+    editExerciseRequest,
+    editExerciseReset,
   } = props;
   
   const navigateGoBack = () => {
@@ -52,6 +59,19 @@ const InfoTraining: React.FC<Props> = props => {
     addExerciseTrainingRequest(training!._id, exercise);
   }
 
+  const editExerciseHandler = (exercise: Exercise) => {
+    setEditExercise(exercise);
+    toggleVisibleModalExercise();
+  };
+
+  const editExerciseReqHandler = (newExercise: AddExercise) => {
+    editExerciseRequest(training!._id, editExercise!._id, newExercise);
+  };
+
+  const resetEditExercise = () => {
+    setEditExercise(undefined);
+  };
+
   const shareDatas = ShareDatas.getInstance();
   const training: Training | undefined = shareDatas.getTraining([...users]);
   const exercises: Exercise[] = training!.exercises;
@@ -64,19 +84,26 @@ const InfoTraining: React.FC<Props> = props => {
         {null}
       </Header>
       <Content>
-        <List data={exercises} removeExerciseTrainingUserHandler={removeExerciseTrainingUserHandler} />
+        <List 
+          data={exercises} 
+          removeExerciseTrainingUserHandler={removeExerciseTrainingUserHandler} 
+          editExerciseHandler={editExerciseHandler}
+        />
         {removeExerciseTrainingLoadingData && <LoadingDialog title="Removendo Exercício" />}
       </Content>
       <Add onPressHandler={toggleVisibleModalExercise} />
       <ExerciseFormModal 
-        addExerciseTrainingLoading={addExerciseTrainingLoadingData} 
-        addExerciseTrainingSuccess={addExerciseTrainingSuccessData} 
-        addExerciseTrainingErr={addExerciseTrainingErrorData}
-        addExerciseTrainingErrMsg={addExerciseTrainingErrorMsgData}
-        addExerciseTrainingRequest={addExerciseTrainingHandler}
-        addExerciseTrainingReset={addExerciseTrainingReset}
+        resetEditExercise={resetEditExercise}
         visibleModalAddExercise={visibleAddExerciseModal}
         toggleModalAddExercise={toggleVisibleModalExercise}
+        actionExerciseTrainingLoading={editExercise ? editExerciseLoadingData : addExerciseTrainingLoadingData} 
+        actionExerciseTrainingSuccess={editExercise ? editExerciseSuccessData : addExerciseTrainingSuccessData} 
+        actionExerciseTrainingErr={editExercise ? editExerciseErrorData : addExerciseTrainingErrorData}
+        actionExerciseTrainingErrMsg={editExercise ? editExerciseErrorMsgData : addExerciseTrainingErrorMsgData}
+        actionExerciseTrainingRequest={editExercise ? editExerciseReqHandler :  addExerciseTrainingHandler}
+        actionExerciseTrainingReset={editExercise ? editExerciseReset : addExerciseTrainingReset}
+        edit={editExercise ? true : false}
+        exercise={editExercise ? editExercise : null}
       />
     </Container>
   );
@@ -93,6 +120,11 @@ const mapStateToProps = (state: ApplicationState) => ({
   removeExerciseTrainingSuccessData: state.gymReducer.remove_exercise_training_success,
   removeExerciseTrainingErrorData: state.gymReducer.remove_exercise_training_error,
   removeExerciseTrainingErrorMsgData: state.gymReducer.remove_exercise_training_error_msg,
+
+  editExerciseLoadingData: state.gymReducer.edit_exercise_loading,
+  editExerciseSuccessData: state.gymReducer.edit_exercise_success,
+  editExerciseErrorData: state.gymReducer.edit_exercise_error,
+  editExerciseErrorMsgData: state.gymReducer.edit_exercise_error_msg,
 
 });
 

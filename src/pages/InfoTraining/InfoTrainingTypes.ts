@@ -1,5 +1,5 @@
 import {NavigationStackProp} from 'react-navigation-stack';
-import User from 'models/User';
+import User, {Exercise} from 'models/User';
 import {AddExercise} from 'models/TypesAux';
 
 export interface StateProps {
@@ -14,6 +14,14 @@ export interface StateProps {
   removeExerciseTrainingErrorData: boolean;
   removeExerciseTrainingErrorMsgData: string;
 
+  editExerciseLoadingData: boolean;
+  editExerciseSuccessData: boolean;
+  editExerciseErrorData: boolean;
+  editExerciseErrorMsgData: string;
+}
+
+export interface DispatchProps {
+  navigation: NavigationStackProp;
   addExerciseTrainingRequest: (
     idTraining: string,
     exercise: AddExercise,
@@ -25,8 +33,11 @@ export interface StateProps {
     idExercise: string,
   ) => void;
   removeExerciseTrainingReset: () => void;
-}
 
-export interface DispatchProps {
-  navigation: NavigationStackProp;
+  editExerciseRequest: (
+    idTraining: string,
+    idExercise: string,
+    exercise: AddExercise,
+  ) => void;
+  editExerciseReset: () => void;
 }

@@ -1,6 +1,6 @@
 import User, {Exercise} from 'models/User';
 import {Action} from 'redux';
-import {CreateUser} from 'models/TypesAux';
+import {CreateUser, AddExercise} from 'models/TypesAux';
 
 /**
  * Action types
@@ -49,6 +49,11 @@ export enum GymTypes {
   EDIT_TRAINING_SUCCESS = '@gym/EDIT_TRAINING_SUCCESS',
   EDIT_TRAINING_ERROR = '@gym/EDIT_TRAINING_ERROR',
   EDIT_TRAINING_RESET = '@gym/EDIT_TRAINING_RESET',
+
+  EDIT_EXERCISE_REQUEST = '@gym/EDIT_EXERCISE_REQUEST',
+  EDIT_EXERCISE_SUCCESS = '@gym/EDIT_EXERCISE_SUCCESS',
+  EDIT_EXERCISE_ERROR = '@gym/EDIT_EXERCISE_ERROR',
+  EDIT_EXERCISE_RESET = '@gym/EDIT_EXERCISE_RESET',
 }
 
 export interface GymState {
@@ -95,6 +100,11 @@ export interface GymState {
   edit_training_success: boolean;
   edit_training_error: boolean;
   edit_training_error_msg: string;
+
+  edit_exercise_loading: boolean;
+  edit_exercise_success: boolean;
+  edit_exercise_error: boolean;
+  edit_exercise_error_msg: string;
 }
 
 export interface CreateUserAction extends Action {
@@ -141,6 +151,14 @@ export interface EditUserAction extends Action {
   payload: {
     id: string;
     user: CreateUser;
+  };
+}
+
+export interface EditExerciseAction extends Action {
+  payload: {
+    idTraining: string;
+    idExercise: string;
+    exercise: AddExercise;
   };
 }
 

@@ -1,6 +1,6 @@
 import axios, {AxiosResponse} from 'axios';
 import User, {Exercise, Training} from 'models/User';
-import {CreateUser} from 'models/TypesAux';
+import {CreateUser, AddExercise} from 'models/TypesAux';
 
 const URL: string = 'http://192.168.1.112:3333';
 
@@ -129,6 +129,24 @@ class GymApi {
       const res: AxiosResponse<ResData> = await axios.patch(
         `${URL}/trainings/${id}`,
         {name},
+      );
+      const training: Training = res.data.data as Training;
+      return training;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+
+  static editExercise = async (
+    idTraining: string,
+    idExercise: string,
+    exercise: AddExercise,
+  ): Promise<Training> => {
+    try {
+      const res: AxiosResponse<ResData> = await axios.patch(
+        `${URL}/trainings/${idTraining}/edit/exercise/${idExercise}`,
+        exercise,
       );
       const training: Training = res.data.data as Training;
       return training;

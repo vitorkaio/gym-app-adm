@@ -59,14 +59,14 @@ const ExerciseForms: React.FC<Props> = props => {
   }, [validForm]);
 
   useEffect(() => {
-    if (props.addExerciseError) {
+    if (props.exerciseError) {
       const nextData = produce(exercise, draft => {
         draft.error = true;
-        draft.errorMsg = props.addExerciseErrorMsg;
+        draft.errorMsg = props.exerciseErrorMsg;
       });
       setExercise(nextData);
     }
-  }, [exercise, props.addExerciseError]);
+  }, [exercise, props.exerciseError]);
 
   const inputChangeHandler = useCallback(
     (id, data) => {
@@ -304,7 +304,7 @@ const ExerciseForms: React.FC<Props> = props => {
           </InputData>
         </Forms>
       </KeyboardAwareScrollView>
-      <FooterButton clickHandler={validateForm} text='Adicionar' />
+      <FooterButton clickHandler={validateForm} text={props.edit ? 'Editar' : 'Adicionar'} />
     </Container>
   );
 };

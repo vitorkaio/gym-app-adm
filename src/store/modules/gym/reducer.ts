@@ -46,6 +46,11 @@ const INITIAL_STATE: GymState = {
   edit_training_loading: false,
   edit_training_error: false,
   edit_training_error_msg: '',
+
+  edit_exercise_success: false,
+  edit_exercise_loading: false,
+  edit_exercise_error: false,
+  edit_exercise_error_msg: '',
 };
 
 const gymReducer: Reducer<GymState> = produce(
@@ -307,6 +312,36 @@ const gymReducer: Reducer<GymState> = produce(
         draft.edit_training_loading = false;
         draft.edit_training_error = false;
         draft.edit_training_error_msg = '';
+        break;
+
+      // ********************* EDIT EXERCISE *********************
+      case GymTypes.EDIT_EXERCISE_REQUEST:
+        draft.edit_exercise_loading = true;
+        draft.edit_exercise_success = false;
+        draft.edit_exercise_error = false;
+        draft.edit_exercise_error_msg = '';
+        break;
+
+      case GymTypes.EDIT_EXERCISE_SUCCESS:
+        draft.users = payload.users;
+        draft.edit_exercise_success = true;
+        draft.edit_exercise_loading = false;
+        draft.edit_exercise_error = false;
+        draft.edit_exercise_error_msg = '';
+        break;
+
+      case GymTypes.EDIT_EXERCISE_ERROR:
+        draft.edit_exercise_success = false;
+        draft.edit_exercise_loading = false;
+        draft.edit_exercise_error = true;
+        draft.edit_exercise_error_msg = payload.msg;
+        break;
+
+      case GymTypes.EDIT_EXERCISE_RESET:
+        draft.edit_exercise_success = false;
+        draft.edit_exercise_loading = false;
+        draft.edit_exercise_error = false;
+        draft.edit_exercise_error_msg = '';
         break;
 
       default:

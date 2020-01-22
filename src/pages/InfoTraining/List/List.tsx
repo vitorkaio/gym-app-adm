@@ -13,27 +13,40 @@ import {ContainerHidden, ItemHidden} from './ListStyle';
 import ConfirmDialog from 'components/Dialogs/Confirm/ConfirmDialog';
 
 const List: React.FC<DispatchProps> = props => {
-  const {data, removeExerciseTrainingUserHandler} = props;
+  const {data, removeExerciseTrainingUserHandler, editExerciseHandler} = props;
   const [toggleConfim, setToggleConfim] = useState(false);
-  const [exerciseDelete, setExerciseDelete] = useState<Exercise>();
+  const [exercise, setExercise] = useState<Exercise>();
+  const [toggleEditConfim, setToggleEditConfim] = useState(false);
 
   const deleteExerciseConfirm = (exercise: Exercise) => {
     // removeTrainingUserHandler(id);
-    setExerciseDelete(exercise);
+    setExercise(exercise);
     setToggleConfim(true);
   };
 
   const deleteExerciseUserHandler = (action: boolean) => {
     if (action) {
-      removeExerciseTrainingUserHandler(exerciseDelete!._id);
+      removeExerciseTrainingUserHandler(exercise!._id);
       setToggleConfim(false);
     } else {
       setToggleConfim(false);
     }
   };
 
-  const editExerciseHandler = (exercise: Exercise) => {
-    console.log(exercise);
+  const editExerciseConfirm = (exercise: Exercise) => {
+    // removeTrainingUserHandler(id);
+    setExercise(exercise);
+    setToggleEditConfim(true);
+  };
+
+  const editExerciseConfirmHandler = (action: boolean) => {
+    if (action) {
+      const newExercise: Exercise = exercise!;
+      editExerciseHandler(newExercise);
+      setToggleEditConfim(false);
+    } else {
+      setToggleEditConfim(false);
+    }
   };
 
   return (
@@ -50,7 +63,7 @@ const List: React.FC<DispatchProps> = props => {
             </ItemHidden>
             <ItemHidden
               style={styles.itemHiddenAlign}
-              onPress={() => editExerciseHandler(item.item)}>
+              onPress={() => editExerciseConfirm(item.item)}>
               <Icon name="pencil" size={22} color={Colors.info_color} />
             </ItemHidden>
           </ContainerHidden>
@@ -60,8 +73,15 @@ const List: React.FC<DispatchProps> = props => {
       {toggleConfim && (
         <ConfirmDialog
           title="Deletar"
-          text={`Deseja deletar o Exercício ${exerciseDelete?.exercise}?`}
+          text={`Deseja deletar o Exercício ${exercise?.exercise}?`}
           action={deleteExerciseUserHandler}
+        />
+      )}
+      {toggleEditConfim && (
+        <ConfirmDialog
+          title="Editar"
+          text={`Deseja editar o exercício ${exercise?.exercise}?`}
+          action={editExerciseConfirmHandler}
         />
       )}
     </>

@@ -9,7 +9,7 @@ import {
   Forms,
   ImageInput,
 } from './ExerciseFormModalStyle';
-import {DispatchProps} from './ExerciseFormModalTypes';
+import {DispatchProps, State} from './ExerciseFormModalTypes';
 import Header from 'components/Header/Header';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Colors from 'components/styles/Colors';
@@ -18,44 +18,59 @@ const AddExerciseImage = require('components/styles/assets/exercise.png');
 import ExerciseForms from './ExerciseForm/ExerciseForm';
 import {AddExercise} from 'models/TypesAux';
 
-type Props = DispatchProps;
+type Props = DispatchProps & State;
 
 const ExerciseFormModal: React.FC<Props> = props => {
   const {
-    addExerciseTrainingLoading,
-    addExerciseTrainingSuccess,
-    addExerciseTrainingErr,
-    addExerciseTrainingErrMsg,
-    addExerciseTrainingRequest,
-    addExerciseTrainingReset,
+    actionExerciseTrainingLoading,
+    actionExerciseTrainingSuccess,
+    actionExerciseTrainingErr,
+    actionExerciseTrainingErrMsg,
+    actionExerciseTrainingRequest,
+    actionExerciseTrainingReset,
     visibleModalAddExercise,
     toggleModalAddExercise,
+    exercise,
+    resetEditExercise,
   } = props;
 
   const navigateGoBack = useCallback(() => {
-    addExerciseTrainingReset();
+    if (exercise) {
+      resetEditExercise();
+    }
+    actionExerciseTrainingReset();
     toggleModalAddExercise();
-  }, [addExerciseTrainingReset, toggleModalAddExercise]);
+  }, [
+    actionExerciseTrainingReset,
+    exercise,
+    resetEditExercise,
+    toggleModalAddExercise,
+  ]);
 
-  const addExerciseHandler = (exercise: AddExercise) => {
-    addExerciseTrainingRequest(exercise);
+  const addExerciseHandler = (newExercise: AddExercise) => {
+    actionExerciseTrainingRequest(newExercise);
+  };
+
+  const closeArrowLeft = () => {
+    resetEditExercise();
+    toggleModalAddExercise();
   };
 
   useEffect(() => {
-    if (addExerciseTrainingSuccess) {
+    if (actionExerciseTrainingSuccess) {
       navigateGoBack();
     }
-  }, [addExerciseTrainingSuccess, navigateGoBack]);
+  }, [actionExerciseTrainingSuccess, navigateGoBack]);
 
   return (
     <Modal
       visible={visibleModalAddExercise}
-      onRequestClose={toggleModalAddExercise}
+      onRequestClose={closeArrowLeft}
       animationType="slide"
       transparent={false}>
       <Container>
         <Header title="Adicionar Exercício">
-          <TouchableOpacity onPress={toggleModalAddExercise}>
+          <TouchableOpacity onPress={closeArrowLeft}>
             <Icon name="arrow-left" size={25} color={Colors.primary_color} />
           </TouchableOpacity>
           {null}
@@ -67,13 +82,22 @@ const ExerciseFormModal: React.FC<Props> = props => {
             </ImageInput>
             <ExerciseForms
               onSubmit={addExerciseHandler}
-              addExerciseError={addExerciseTrainingErr}
-              addExerciseErrorMsg={addExerciseTrainingErrMsg}
+              exerciseError={actionExerciseTrainingErr}
+              exerciseErrorMsg={actionExerciseTrainingErrMsg}
+              edit={exercise ? true : false}
+              editExercise={exercise ? exercise.exercise : ''}
+              editNumber={exercise ? exercise.number.toString() : ''}
+              editRepetitions={exercise ? exercise.repetitions.toString() : ''}
+              editWeight={exercise ? exercise.weight.toString() : ''}
+              editTime={exercise ? exercise.time.toString() : ''}
+              editObs={exercise ? exercise.obs : ''}
             />
           </Forms>
         </Content>
-        {addExerciseTrainingLoading && (
-          <LoadingDialog title="Adicionando Exercício" />
+        {actionExerciseTrainingLoading && (
+          <LoadingDialog
+            title={exercise ? 'Editando Exercício' : 'Adicionando Exercício'}
+          />
         )}
       </Container>
     </Modal>
