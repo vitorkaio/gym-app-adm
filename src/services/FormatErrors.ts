@@ -1,6 +1,10 @@
+export enum ERRORS {
+  errServer = 'err-server',
+}
+
 enum MSG_ERRORS {
   username = 'Username já cadastrado!',
-  errServer = 'Erro no servidor. Não foi possível acessar os dados!',
+  errServer = 'Erro no servidor. Não foi possível realizar a operação!',
 }
 
 class FormatErrors {

@@ -68,7 +68,7 @@ const AddTrainingUserModal: React.FC<Props> = props => {
       animationType="slide"
       transparent={false}>
       <Container>
-        <Header title="Adicionar Treino">
+        <Header title={training ? 'Editar Treino' : 'Adicionar Treino'}>
           <TouchableOpacity onPress={closeArrowLeft}>
             <Icon name="arrow-left" size={25} color={Colors.primary_color} />
           </TouchableOpacity>

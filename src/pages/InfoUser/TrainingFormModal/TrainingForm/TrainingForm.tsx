@@ -20,13 +20,14 @@ const TrainingForms: React.FC<Props> = props => {
 
   useEffect(() => {
     if (props.trainingError) {
-      const nextData = produce(name, draft => {
-        draft.error = true;
-        draft.errorMsg = props.trainingErrorMsg;
+      setName(prev => {
+        return produce(prev, draft => {
+          draft.error = true;
+          draft.errorMsg = props.trainingErrorMsg;
+        });
       });
-      setName(nextData);
     }
-  }, [name, props.trainingError, props.trainingErrorMsg]);
+  }, [props.trainingError, props.trainingErrorMsg]);
 
   const inputChangeHandler = useCallback(
     (id, data) => {

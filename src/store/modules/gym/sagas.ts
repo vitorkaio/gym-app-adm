@@ -35,7 +35,7 @@ import {
   EditUserAction,
   EditExerciseAction,
 } from './types';
-import FormatErrors from 'services/FormatErrors';
+import FormatErrors, {ERRORS} from 'services/FormatErrors';
 
 function* usersRequestLoad() {
   try {
@@ -56,10 +56,10 @@ function* createUserLoad(action: CreateUserAction) {
       if (users) {
         yield put(createUserSuccess(users));
       } else {
-        yield put(createUserError('error'));
+        yield put(createUserError(FormatErrors.format(ERRORS.errServer)));
       }
     } else {
-      yield put(createUserError('error'));
+      yield put(createUserError(FormatErrors.format(ERRORS.errServer)));
     }
   } catch (error) {
     yield put(createUserError(FormatErrors.format(error)));
@@ -98,13 +98,17 @@ function* updateAddTrainingUser(action: UpdateAddTrainingUserAction) {
       if (users) {
         yield put(updateAddTrainingUserSuccess(users));
       } else {
-        yield put(updateAddTrainingUserError('error'));
+        yield put(
+          updateAddTrainingUserError(FormatErrors.format(ERRORS.errServer)),
+        );
       }
     } else {
-      yield put(updateAddTrainingUserError('error'));
+      yield put(
+        updateAddTrainingUserError(FormatErrors.format(ERRORS.errServer)),
+      );
     }
   } catch (error) {
-    yield put(updateAddTrainingUserError('error'));
+    yield put(updateAddTrainingUserError(FormatErrors.format(error)));
   }
 }
 
@@ -186,10 +190,10 @@ function* editUser(action: EditUserAction) {
       if (users) {
         yield put(editUserSuccess(users));
       } else {
-        yield put(editUserError('error'));
+        yield put(editUserError(FormatErrors.format(ERRORS.errServer)));
       }
     } else {
-      yield put(editUserError('error'));
+      yield put(editUserError(FormatErrors.format(ERRORS.errServer)));
     }
   } catch (error) {
     yield put(editUserError(FormatErrors.format(error)));
@@ -209,13 +213,13 @@ function* editTraining(action: UpdateAddTrainingUserAction) {
       if (users) {
         yield put(editTrainingSuccess(users));
       } else {
-        yield put(editTrainingError('error'));
+        yield put(editTrainingError(FormatErrors.format(ERRORS.errServer)));
       }
     } else {
-      yield put(editTrainingError('error'));
+      yield put(editTrainingError(FormatErrors.format(ERRORS.errServer)));
     }
   } catch (error) {
-    yield put(editTrainingError('error'));
+    yield put(editTrainingError(FormatErrors.format(error)));
   }
 }
 

@@ -76,8 +76,15 @@ const InfoUser: React.FC<Props> = props => {
   };
 
   const resetEditTraining = () => {
-    setEditTraining(undefined);
-  };
+    if (addTrainingUserErrorData) {
+      updateAddTrainingUserReset();
+    }
+
+    if (editTrainingErrorData) {
+      editTrainingReset();
+      setEditTraining(undefined);
+    }
+}
 
   const shareDatas = ShareDatas.getInstance();
   const user: User | undefined = shareDatas.getUser([...users]);

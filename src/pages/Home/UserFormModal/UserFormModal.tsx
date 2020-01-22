@@ -17,6 +17,8 @@ import UserForms from './UserForm/UserForm';
 import {CreateUser} from 'models/TypesAux';
 import LoadingDialog from 'components/Dialogs/Loading/LoadingDialog';
 const AddUserImage = require('components/styles/assets/add_user_wall.png');
+import InfoDialog from 'components/Dialogs/Info/InfoDialog';
+
 
 type Props = DispatchProps;
 
@@ -65,7 +67,7 @@ const UserFormModal: React.FC<Props> = props => {
       animationType="slide"
       transparent={false}>
       <Container>
-        <Header title="Adicionar Aluno">
+        <Header title={user ? 'Editar Aluno' : 'Adicionar Aluno'}>
           <TouchableOpacity onPress={closeArrowLeft}>
             <Icon name="arrow-left" size={25} color={Colors.primary_color} />
           </TouchableOpacity>
@@ -88,6 +90,17 @@ const UserFormModal: React.FC<Props> = props => {
           </Forms>
         </Content>
         {actionUserLoading && <LoadingDialog title={user ? 'Editar Usuário' : 'Adicionando Usuário'} />}
+        {actionUserErr ? (
+        <InfoDialog
+          title="Error"
+          text={
+            actionUserMsg
+          }
+          action={() =>
+            closeArrowLeft()
+          }
+        />
+      ) : null}
       </Container>
     </Modal>
   );
