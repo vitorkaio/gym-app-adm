@@ -6,6 +6,7 @@ const INITIAL_STATE: GymState = {
   users: [],
   users_loading: false,
   users_error: false,
+  users_error_msg: '',
 
   create_user_success: false,
   create_user_loading: false,
@@ -74,6 +75,7 @@ const gymReducer: Reducer<GymState> = produce(
         draft.users = [];
         draft.users_loading = false;
         draft.users_error = true;
+        draft.users_error_msg = payload.msg;
         break;
 
       // ********************* CREATE NEW USER *********************

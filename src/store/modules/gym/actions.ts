@@ -8,7 +8,7 @@ import {CreateUser, AddExercise} from 'models/TypesAux';
 export const usersRequest = () => action(GymTypes.USER_REQUEST);
 export const userSuccess = (users: User[]) =>
   action(GymTypes.USER_SUCCCES, {users});
-export const userError = () => action(GymTypes.USER_ERROR);
+export const userError = (msg: string) => action(GymTypes.USER_ERROR, {msg});
 
 // CREATE USER
 export const createUserRequest = (newUser: CreateUser) =>

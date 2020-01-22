@@ -29,6 +29,7 @@ const Input: React.FC<Props> = props => {
         keyboardType={keyboardType}
         onChangeText={textChangeHandler}
         value={value}
+        errorText={errorText?.length !== 0 ? true : false}
       />
       <Error>
         <LabelError>{errorText}</LabelError>

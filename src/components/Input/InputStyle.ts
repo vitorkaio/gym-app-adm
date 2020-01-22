@@ -1,6 +1,10 @@
 import styled from 'styled-components/native';
 import Colors from 'components/styles/Colors';
 
+interface Props {
+  errorText: boolean;
+}
+
 export const Container = styled.View`
   padding-top: 3;
   padding-bottom: 3;
@@ -21,7 +25,8 @@ export const TextInput = styled.TextInput`
   padding-bottom: 10;
   border-width: 1;
   border-radius: 5;
-  border-color: ${Colors.label_color};
+  border-color: ${(props: Props) =>
+    props.errorText ? Colors.delete_color : Colors.label_color};
   color: ${Colors.text_color};
 `;
 

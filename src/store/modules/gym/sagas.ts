@@ -35,13 +35,15 @@ import {
   EditUserAction,
   EditExerciseAction,
 } from './types';
+import FormatErrors from 'services/FormatErrors';
 
 function* usersRequestLoad() {
   try {
     const users: User[] = yield call(GymApi.getUsers);
     yield put(userSuccess(users));
   } catch (err) {
-    yield put(userError());
+    console.log(err);
+    yield put(userError(FormatErrors.format(err)));
   }
 }
 
@@ -60,7 +62,7 @@ function* createUserLoad(action: CreateUserAction) {
       yield put(createUserError('error'));
     }
   } catch (error) {
-    yield put(createUserError('error'));
+    yield put(createUserError(FormatErrors.format(error)));
   }
 }
 
@@ -190,7 +192,7 @@ function* editUser(action: EditUserAction) {
       yield put(editUserError('error'));
     }
   } catch (error) {
-    yield put(editUserError('error'));
+    yield put(editUserError(FormatErrors.format(error)));
   }
 }
 

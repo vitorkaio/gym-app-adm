@@ -9,6 +9,15 @@ interface ResData {
   code: number;
   data: User | User[] | Training;
 }
+interface ResErrorData {
+  response: {
+    data: {
+      msg: string;
+      code: number;
+      data: User | User[] | Training | string;
+    };
+  };
+}
 
 class GymApi {
   static async getUsers(): Promise<User[]> {
@@ -17,8 +26,7 @@ class GymApi {
       const user: User[] = res.data.data as User[];
       return user;
     } catch (error) {
-      console.log(error);
-      throw error;
+      throw 'err-server';
     }
   }
 
@@ -31,7 +39,8 @@ class GymApi {
       const user: User = res.data.data as User;
       return user;
     } catch (error) {
-      throw error;
+      const err: ResErrorData = error;
+      throw err.response.data.data;
     }
   }
 
@@ -119,8 +128,8 @@ class GymApi {
       const user: User = res.data.data as User;
       return user;
     } catch (error) {
-      console.log(error);
-      throw error;
+      const err: ResErrorData = error;
+      throw err.response.data.data;
     }
   };
 

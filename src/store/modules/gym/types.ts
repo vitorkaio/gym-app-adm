@@ -60,6 +60,7 @@ export interface GymState {
   users: User[];
   users_loading: boolean;
   users_error: boolean;
+  users_error_msg: string;
 
   create_user_success: boolean;
   create_user_loading: boolean;

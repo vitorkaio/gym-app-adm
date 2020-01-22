@@ -15,6 +15,7 @@ import Add from 'components/Add/Add';
 import UserFormModal from './UserFormModal/UserFormModal';
 import {CreateUser} from 'models/TypesAux';
 import LoadingDialog from 'components/Dialogs/Loading/LoadingDialog';
+import InfoDialog from 'components/Dialogs/Info/InfoDialog';
 import ShareDatas from 'services/ShareDatas';
 
 type Props = StateProps & DispatchProps;
@@ -24,6 +25,8 @@ const Home: React.FC<Props> = props => {
     usersRequest,
     usersData,
     usersLoadingData,
+    usersErrorData,
+    usersErrorMsgData,
     createUserLoadingData,
     createUserErrorData,
     createUserSuccessData,
@@ -78,7 +81,13 @@ const Home: React.FC<Props> = props => {
   };
 
   const resetEdituser = () => {
-    setEditUser(undefined);
+    if (createUserErrorData) {
+      createUserReset();
+    }
+    if (editUserErrorData) {
+      editUserReset();
+      setEditUser(undefined);
+    }
   };
 
   useEffect(() => {
@@ -90,6 +99,12 @@ const Home: React.FC<Props> = props => {
       removeUserReset();
     }
   }, [removeUserSuccessDatas, removeUserReset]);
+
+  useEffect(() => {
+    if (editUserSuccessData) {
+      setEditUser(undefined);
+    }
+  }, [editUserSuccessData]);
 
   // console.log('Home - Render');
 
@@ -134,6 +149,13 @@ const Home: React.FC<Props> = props => {
           user={editUser ? editUser : null}
         />
       ) : null}
+      {usersErrorData && (
+        <InfoDialog
+          title="Error"
+          text={usersErrorMsgData}
+          action={() => usersRequest()}
+        />
+      )}
     </Container>
   );
 };
@@ -142,6 +164,7 @@ const mapStateToProps = (state: ApplicationState) => ({
   usersLoadingData: state.gymReducer.users_loading,
   usersData: state.gymReducer.users,
   usersErrorData: state.gymReducer.users_error,
+  usersErrorMsgData: state.gymReducer.users_error_msg,
 
   createUserLoadingData: state.gymReducer.create_user_loading,
   createUserSuccessData: state.gymReducer.create_user_success,

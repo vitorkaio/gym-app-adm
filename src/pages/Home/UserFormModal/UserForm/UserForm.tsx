@@ -33,13 +33,14 @@ const UserForms: React.FC<Props> = props => {
 
   useEffect(() => {
     if (props.actionUserError) {
-      const nextData = produce(username, draft => {
-        draft.error = true;
-        draft.errorMsg = props.actionUserErrorMsg;
+      setUsername(prev => {
+        return produce(prev, draft => {
+          draft.error = true;
+          draft.errorMsg = props.actionUserErrorMsg;
+        });
       });
-      setUsername(nextData);
     }
-  }, [props.actionUserError, props.actionUserErrorMsg, username]);
+  }, [props.actionUserError, props.actionUserErrorMsg]);
 
   const inputChangeHandler = useCallback(
     (id, data) => {

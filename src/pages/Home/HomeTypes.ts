@@ -6,6 +6,7 @@ export interface StateProps {
   usersLoadingData: boolean;
   usersData: User[];
   usersErrorData: boolean;
+  usersErrorMsgData: string;
 
   createUserLoadingData: boolean;
   createUserSuccessData: boolean;
