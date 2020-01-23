@@ -13,3 +13,5 @@ export const Content = styled.View`
 export const Text = styled.Text`
   color: ${Colors.text_color};
 `;
+
+export const Touch = styled.TouchableOpacity``;

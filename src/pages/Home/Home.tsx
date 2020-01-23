@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ApplicationState} from 'store/store';
 import * as GymActions from 'store/modules/gym/actions';
 import {DispatchProps, StateProps} from './HomeTypes';
-import {Container, Content} from './HomeStyle';
+import {Container, Content, Touch} from './HomeStyle';
 import Header from 'components/Header/Header';
 import Colors from 'components/styles/Colors';
 import List from './List/List';
@@ -17,6 +17,8 @@ import {CreateUser} from 'models/TypesAux';
 import LoadingDialog from 'components/Dialogs/Loading/LoadingDialog';
 import InfoDialog from 'components/Dialogs/Info/InfoDialog';
 import ShareDatas from 'services/ShareDatas';
+import MenuChoose from './MenuChoose/MenuChoose';
+import Search from './Search/Search';
 
 type Props = StateProps & DispatchProps;
 
@@ -49,12 +51,17 @@ const Home: React.FC<Props> = props => {
   } = props;
   const [visibleModalUser, setVisibleModalUser] = useState(false);
   const [editUser, setEditUser] = useState<User>();
+  const [toggleMenu, setToggleMenu] = useState(false);
+  const [search, setSearch] = useState(false);
+  const [searchUsername, setSearchUsername] = useState('');
 
   const addUserNavigate = () => {
+    closeSearch();
     toggleVisibleModalUser();
   };
 
   const infoUserNavigate = (user: User) => {
+    closeSearch();
     const shareDatas = ShareDatas.getInstance();
     shareDatas.id = user._id;
     navigation.navigate('InfoUser');
@@ -93,6 +100,30 @@ const Home: React.FC<Props> = props => {
     }
   };
 
+  const toggleMenuHandler = () => {
+    setToggleMenu(!toggleMenu);
+  };
+
+  const searchHandler = () => {
+    setSearch(!search);
+    toggleMenuHandler();
+  };
+
+  const getUsers = () => {
+    return usersData.filter((user: User) =>
+      user.username.toLocaleLowerCase().startsWith(searchUsername),
+    );
+  };
+
+  const closeSearch = () => {
+    setSearch(false);
+    resetSearch();
+  };
+
+  const resetSearch = () => {
+    setSearchUsername('');
+  };
+
   useEffect(() => {
     usersRequest();
   }, [usersRequest]);
@@ -113,16 +144,27 @@ const Home: React.FC<Props> = props => {
 
   return (
     <Container>
-      <Header title="Alunos">
-        <Icon name="menu" size={25} color={Colors.primary_color} />
-        <Icon name="magnify" size={25} color={Colors.primary_color} />
-      </Header>
+      {search === true ? (
+        <Search
+          closeSearch={closeSearch}
+          onSearchUsername={(searchUser: string) =>
+            setSearchUsername(searchUser)
+          }
+        />
+      ) : (
+        <Header title="Alunos">
+          {null}
+          <Touch onPress={toggleMenuHandler}>
+            <Icon name="dots-vertical" size={25} color={Colors.primary_color} />
+          </Touch>
+        </Header>
+      )}
       <Content>
         {usersLoadingData ? (
           <LoadingDialog title="Carregando Usuários" />
         ) : (
           <List
-            data={usersData}
+            data={getUsers()}
             select={infoUserNavigate}
             removeUserHandler={removeUserHandler}
             editUserHandler={editUserHandler}
@@ -164,6 +206,13 @@ const Home: React.FC<Props> = props => {
           title="Error"
           text={removeUserErrorMsgData}
           action={() => removeUserReset()}
+        />
+      )}
+      {toggleMenu && (
+        <MenuChoose
+          toggleMenuHandler={toggleMenuHandler}
+          search={searchHandler}
+          exit={() => {}}
         />
       )}
     </Container>

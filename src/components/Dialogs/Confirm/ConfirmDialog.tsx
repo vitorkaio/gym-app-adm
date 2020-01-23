@@ -21,7 +21,7 @@ type Props = DispatchProps;
 const ConfirmDialog: React.FC<Props> = ({title, text, action}) => {
   return (
     <Container style={ConfirmStyled.container}>
-      <BackDrop action={action} />
+      <BackDrop action={() => {}} />
       <Content style={ConfirmStyled.content}>
         <TitleContainer>
           <Title>{title}</Title>
