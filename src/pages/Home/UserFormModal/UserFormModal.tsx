@@ -108,8 +108,8 @@ const UserFormModal: React.FC<Props> = props => {
 
 const AddUserModalStyle = StyleSheet.create({
   image: {
-    width: 180,
-    height: 180,
+    width: 130,
+    height: 130,
   },
 });
 

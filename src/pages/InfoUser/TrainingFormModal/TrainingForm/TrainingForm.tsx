@@ -95,12 +95,15 @@ const TrainingForms: React.FC<Props> = props => {
               value={name.data}
             />
           </InputData>
+
+          <InputData style={styles.InputData}>
+            <FooterButton
+              clickHandler={validateForm}
+              text={props.edit ? 'Editar' : 'Adicionar'}
+            />
+          </InputData>
         </Forms>
       </KeyboardAwareScrollView>
-      <FooterButton
-        clickHandler={validateForm}
-        text={props.edit ? 'Editar' : 'Adicionar'}
-      />
     </Container>
   );
 };

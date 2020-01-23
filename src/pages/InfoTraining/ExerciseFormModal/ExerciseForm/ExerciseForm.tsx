@@ -303,9 +303,15 @@ const ExerciseForms: React.FC<Props> = props => {
               value={obs.data}
             />
           </InputData>
+
+          <InputData style={{width: '90%'}}>
+            <FooterButton
+              clickHandler={validateForm}
+              text={props.edit ? 'Editar' : 'Adicionar'}
+            />
+            </InputData>
         </Forms>
       </KeyboardAwareScrollView>
-      <FooterButton clickHandler={validateForm} text={props.edit ? 'Editar' : 'Adicionar'} />
     </Container>
   );
 };

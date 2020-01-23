@@ -14,7 +14,7 @@ import Header from 'components/Header/Header';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Colors from 'components/styles/Colors';
 import LoadingDialog from 'components/Dialogs/Loading/LoadingDialog';
-const AddExerciseImage = require('components/styles/assets/exercise.png');
+const AddExerciseImage = require('components/styles/assets/exercise_data.png');
 import ExerciseForms from './ExerciseForm/ExerciseForm';
 import {AddExercise} from 'models/TypesAux';
 
@@ -106,8 +106,8 @@ const ExerciseFormModal: React.FC<Props> = props => {
 
 const styles = StyleSheet.create({
   image: {
-    width: 150,
-    height: 150,
+    width: 130,
+    height: 130,
   },
 });
 

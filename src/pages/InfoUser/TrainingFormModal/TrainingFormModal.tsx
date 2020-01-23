@@ -100,8 +100,8 @@ const AddTrainingUserModal: React.FC<Props> = props => {
 
 const styles = StyleSheet.create({
   image: {
-    width: 200,
-    height: 200,
+    width: 150,
+    height: 150,
   },
 });
 
