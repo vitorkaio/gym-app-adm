@@ -60,13 +60,14 @@ const ExerciseForms: React.FC<Props> = props => {
 
   useEffect(() => {
     if (props.exerciseError) {
-      const nextData = produce(exercise, draft => {
-        draft.error = true;
-        draft.errorMsg = props.exerciseErrorMsg;
+      setExercise(prev => {
+        return produce(prev, draft => {
+          draft.error = true;
+          draft.errorMsg = props.exerciseErrorMsg;
+        });
       });
-      setExercise(nextData);
     }
-  }, [exercise, props.exerciseError]);
+  }, [props.exerciseError]);
 
   const inputChangeHandler = useCallback(
     (id, data) => {
@@ -169,7 +170,7 @@ const ExerciseForms: React.FC<Props> = props => {
         time: time.data,
         obs: obs.data,
       };
-      resetFields();
+      // resetFields();
       props.onSubmit(newExercise);
     }
   }, [

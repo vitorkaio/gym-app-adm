@@ -75,13 +75,13 @@ function* removeUserLoad(action: RemoveUserAction) {
       if (users) {
         yield put(removeUserSuccess(users));
       } else {
-        yield put(removeUserError('error'));
+        yield put(removeUserError(FormatErrors.format(ERRORS.errServer)));
       }
     } else {
-      yield put(removeUserError('error'));
+      yield put(removeUserError(FormatErrors.format(ERRORS.errServer)));
     }
   } catch (error) {
-    yield put(removeUserError('error'));
+    yield put(removeUserError(FormatErrors.format(error)));
   }
 }
 
@@ -125,13 +125,15 @@ function* removeTrainingUser(action: RemoveTrainingUserAction) {
       if (users) {
         yield put(removeTrainingUserSuccess(users));
       } else {
-        yield put(removeTrainingUserError('error'));
+        yield put(
+          removeTrainingUserError(FormatErrors.format(ERRORS.errServer)),
+        );
       }
     } else {
-      yield put(removeTrainingUserError('error'));
+      yield put(removeTrainingUserError(FormatErrors.format(ERRORS.errServer)));
     }
   } catch (error) {
-    yield put(removeTrainingUserError('error'));
+    yield put(removeTrainingUserError(FormatErrors.format(error)));
   }
 }
 
@@ -148,13 +150,17 @@ function* addExerciseTraining(action: AddExerciseTrainingAction) {
       if (users) {
         yield put(addExerciseTrainingSuccess(users));
       } else {
-        yield put(addExerciseTrainingError('error'));
+        yield put(
+          addExerciseTrainingError(FormatErrors.format(ERRORS.errServer)),
+        );
       }
     } else {
-      yield put(addExerciseTrainingError('error'));
+      yield put(
+        addExerciseTrainingError(FormatErrors.format(ERRORS.errServer)),
+      );
     }
   } catch (error) {
-    yield put(addExerciseTrainingError('error'));
+    yield put(addExerciseTrainingError(FormatErrors.format(error)));
   }
 }
 
@@ -171,13 +177,17 @@ function* removeExerciseTraining(action: RemoveExerciseTrainingAction) {
       if (users) {
         yield put(removeExerciseTrainingSuccess(users));
       } else {
-        yield put(removeExerciseTrainingError('error'));
+        yield put(
+          removeExerciseTrainingError(FormatErrors.format(ERRORS.errServer)),
+        );
       }
     } else {
-      yield put(removeExerciseTrainingError('error'));
+      yield put(
+        removeExerciseTrainingError(FormatErrors.format(ERRORS.errServer)),
+      );
     }
   } catch (error) {
-    yield put(removeExerciseTrainingError('error'));
+    yield put(removeExerciseTrainingError(FormatErrors.format(error)));
   }
 }
 
@@ -237,13 +247,13 @@ function* editExercise(action: EditExerciseAction) {
       if (users) {
         yield put(editExerciseSuccess(users));
       } else {
-        yield put(editExerciseError('error'));
+        yield put(editExerciseError(FormatErrors.format(ERRORS.errServer)));
       }
     } else {
-      yield put(editExerciseError('error'));
+      yield put(editExerciseError(FormatErrors.format(ERRORS.errServer)));
     }
   } catch (error) {
-    yield put(editExerciseError('error'));
+    yield put(editExerciseError(FormatErrors.format(error)));
   }
 }
 

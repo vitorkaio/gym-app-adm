@@ -55,7 +55,10 @@ class GymApi {
       const user: User = res.data.data as User;
       return user;
     } catch (error) {
-      throw error;
+      const err: ResErrorData = error;
+      throw err.response === undefined
+        ? ERRORS.errServer
+        : err.response.data.data;
     }
   }
 
@@ -86,8 +89,10 @@ class GymApi {
       const user: User = res.data.data as User;
       return user;
     } catch (error) {
-      console.log(error);
-      throw error;
+      const err: ResErrorData = error;
+      throw err.response === undefined
+        ? ERRORS.errServer
+        : err.response.data.data;
     }
   };
 
@@ -103,8 +108,10 @@ class GymApi {
       const training: Training = res.data.data as Training;
       return training;
     } catch (error) {
-      console.log(error);
-      throw error;
+      const err: ResErrorData = error;
+      throw err.response === undefined
+        ? ERRORS.errServer
+        : err.response.data.data;
     }
   };
 
@@ -119,8 +126,10 @@ class GymApi {
       const training: Training = res.data.data as Training;
       return training;
     } catch (error) {
-      console.log(error);
-      throw error;
+      const err: ResErrorData = error;
+      throw err.response === undefined
+        ? ERRORS.errServer
+        : err.response.data.data;
     }
   };
 
@@ -169,8 +178,10 @@ class GymApi {
       const training: Training = res.data.data as Training;
       return training;
     } catch (error) {
-      console.log(error);
-      throw error;
+      const err: ResErrorData = error;
+      throw err.response === undefined
+        ? ERRORS.errServer
+        : err.response.data.data;
     }
   };
 }

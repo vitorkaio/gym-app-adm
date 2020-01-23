@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {connect} from 'react-redux';
 import {bindActionCreators, Dispatch} from 'redux';
@@ -17,7 +17,7 @@ import Add from 'components/Add/Add';
 import ExerciseFormModal from './ExerciseFormModal/ExerciseFormModal';
 import { AddExercise } from 'models/TypesAux';
 import LoadingDialog from 'components/Dialogs/Loading/LoadingDialog';
-
+import InfoDialog from 'components/Dialogs/Info/InfoDialog';
 
 type Props = DispatchProps & StateProps;
 
@@ -35,6 +35,9 @@ const InfoTraining: React.FC<Props> = props => {
     addExerciseTrainingReset,
     removeExerciseTrainingLoadingData,
     removeExerciseTrainingRequest,
+    removeExerciseTrainingErrorData,
+    removeExerciseTrainingErrorMsgData,
+    removeExerciseTrainingReset,
     editExerciseLoadingData,
     editExerciseSuccessData,
     editExerciseErrorData,
@@ -69,8 +72,23 @@ const InfoTraining: React.FC<Props> = props => {
   };
 
   const resetEditExercise = () => {
-    setEditExercise(undefined);
-  };
+    if (addExerciseTrainingErrorData) {
+      addExerciseTrainingReset();
+    }
+
+    if (editExerciseErrorData) {
+      editExerciseReset();
+    }
+    if (editExercise) {
+      setEditExercise(undefined);
+    }
+  }
+
+  useEffect(() => {
+    if (editExerciseSuccessData) {
+      setEditExercise(undefined);
+    }
+  }, [editExerciseSuccessData]);
 
   const shareDatas = ShareDatas.getInstance();
   const training: Training | undefined = shareDatas.getTraining([...users]);
@@ -102,9 +120,15 @@ const InfoTraining: React.FC<Props> = props => {
         actionExerciseTrainingErrMsg={editExercise ? editExerciseErrorMsgData : addExerciseTrainingErrorMsgData}
         actionExerciseTrainingRequest={editExercise ? editExerciseReqHandler :  addExerciseTrainingHandler}
         actionExerciseTrainingReset={editExercise ? editExerciseReset : addExerciseTrainingReset}
-        edit={editExercise ? true : false}
         exercise={editExercise ? editExercise : null}
       />
+      {removeExerciseTrainingErrorData && (
+        <InfoDialog
+          title="Error"
+          text={removeExerciseTrainingErrorMsgData}
+          action={() => removeExerciseTrainingReset()}
+        />
+      )}
     </Container>
   );
 };

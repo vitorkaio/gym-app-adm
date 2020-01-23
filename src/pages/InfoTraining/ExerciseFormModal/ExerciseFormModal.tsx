@@ -69,7 +69,7 @@ const ExerciseFormModal: React.FC<Props> = props => {
       animationType="slide"
       transparent={false}>
       <Container>
-        <Header title="Adicionar Exercício">
+        <Header title={exercise ? 'Editar Treino' : 'Adicionar Treino'}>
           <TouchableOpacity onPress={closeArrowLeft}>
             <Icon name="arrow-left" size={25} color={Colors.primary_color} />
           </TouchableOpacity>

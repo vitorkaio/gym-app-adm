@@ -41,6 +41,7 @@ const Home: React.FC<Props> = props => {
     editUserLoadingData,
     editUserSuccessData,
     editUserErrorData,
+    removeUserErrorData,
     removeUserErrorMsgData,
     editUserRequest,
     editUserErrorMsgData,
@@ -86,6 +87,8 @@ const Home: React.FC<Props> = props => {
     }
     if (editUserErrorData) {
       editUserReset();
+    }
+    if (editUser) {
       setEditUser(undefined);
     }
   };
@@ -154,6 +157,13 @@ const Home: React.FC<Props> = props => {
           title="Error"
           text={usersErrorMsgData}
           action={() => usersRequest()}
+        />
+      )}
+      {removeUserErrorData && (
+        <InfoDialog
+          title="Error"
+          text={removeUserErrorMsgData}
+          action={() => removeUserReset()}
         />
       )}
     </Container>

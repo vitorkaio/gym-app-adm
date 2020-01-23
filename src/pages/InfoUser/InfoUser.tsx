@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators, Dispatch} from 'redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -16,6 +16,7 @@ import List from './List/List';
 import User, {Training} from 'models/User';
 import Add from 'components/Add/Add';
 import TrainingFormModal from './TrainingFormModal/TrainingFormModal';
+import InfoDialog from 'components/Dialogs/Info/InfoDialog';
 
 type Props = DispatchProps & StateProps;
 
@@ -30,6 +31,9 @@ const InfoUser: React.FC<Props> = props => {
     updateAddTrainingUserReset,
     removeTrainingUserRequest,
     removeTrainingUserLoadingData,
+    removeTrainingUserErrorData,
+    removeTrainingUserErrorMsgData,
+    removeTrainingUserReset,
     editTrainingLoadingData,
     editTrainingSuccessData,
     editTrainingErrorData,
@@ -82,9 +86,17 @@ const InfoUser: React.FC<Props> = props => {
 
     if (editTrainingErrorData) {
       editTrainingReset();
+    }
+    if (editTraining) {
       setEditTraining(undefined);
     }
-}
+  }
+
+  useEffect(() => {
+    if (editTrainingSuccessData) {
+      setEditTraining(undefined);
+    }
+  }, [editTrainingSuccessData]);
 
   const shareDatas = ShareDatas.getInstance();
   const user: User | undefined = shareDatas.getUser([...users]);
@@ -122,6 +134,13 @@ const InfoUser: React.FC<Props> = props => {
           actionTrainingUserReset={editTraining ? editTrainingReset : updateAddTrainingUserReset}
           edit={editTraining ? true : false}
           training={editTraining ? editTraining : null}
+        />
+      )}
+      {removeTrainingUserErrorData && (
+        <InfoDialog
+          title="Error"
+          text={removeTrainingUserErrorMsgData}
+          action={() => removeTrainingUserReset()}
         />
       )}
     </Container>
