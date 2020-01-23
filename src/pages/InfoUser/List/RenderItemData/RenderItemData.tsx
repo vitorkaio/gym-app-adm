@@ -30,7 +30,7 @@ const RenderItemData: React.FC<DispatchProps> = props => {
         <Trainings training={item} />
       </CenterComponent>
       <RightComponent>
-        <Icon name="arrow-right" size={25} color={Colors.primary_color} />
+        <Icon name="arrow-right" size={20} color={Colors.primary_color} />
       </RightComponent>
     </Container>
   );

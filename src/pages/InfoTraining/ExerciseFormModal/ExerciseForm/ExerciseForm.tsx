@@ -167,8 +167,8 @@ const ExerciseForms: React.FC<Props> = props => {
         number: parseInt(number?.data ? number.data : '0', 10),
         weight: parseInt(weight?.data ? weight.data : '0', 10),
         repetitions: parseInt(repetitions?.data ? repetitions.data : '0', 10),
-        time: time.data,
-        obs: obs.data,
+        time: parseInt(time?.data ? time.data : '0', 10),
+        obs: obs?.data ? obs.data : '',
       };
       // resetFields();
       props.onSubmit(newExercise);

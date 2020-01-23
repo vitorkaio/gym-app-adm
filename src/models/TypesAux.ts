@@ -12,6 +12,6 @@ export interface AddExercise {
   number?: number;
   weight?: number;
   repetitions?: number;
-  time?: string;
+  time?: number;
   obs?: string;
 }
