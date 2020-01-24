@@ -5,10 +5,14 @@ export enum ERRORS {
 enum MSG_ERRORS {
   username = 'Username já cadastrado!',
   errServer = 'Erro no servidor. Não foi possível realizar a operação!',
+  loginInvalid = 'Login Inválido',
 }
 
 class FormatErrors {
   static format(err: string) {
+    if (err === null) {
+      return MSG_ERRORS.loginInvalid;
+    }
     const lisErrsFormts = '' + err.split(' ');
     if (lisErrsFormts.includes('E11000')) {
       if (lisErrsFormts.includes('username_1')) {
@@ -20,8 +24,7 @@ class FormatErrors {
     else if (lisErrsFormts.includes("renavam_1")) {
       return MSG_ERRORS.renavam
     } */
-    }
-    if (lisErrsFormts.includes('err-server')) {
+    } else if (lisErrsFormts.includes('err-server')) {
       return MSG_ERRORS.errServer;
     }
 

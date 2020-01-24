@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {ApplicationState} from 'store/store';
 import * as GymActions from 'store/modules/gym/actions';
+import * as AuthActions from 'store/modules/auth/actions';
 import {DispatchProps, StateProps} from './HomeTypes';
 import {Container, Content, Touch} from './HomeStyle';
 import Header from 'components/Header/Header';
@@ -48,6 +49,7 @@ const Home: React.FC<Props> = props => {
     editUserRequest,
     editUserErrorMsgData,
     editUserReset,
+    authUserReset,
   } = props;
   const [visibleModalUser, setVisibleModalUser] = useState(false);
   const [editUser, setEditUser] = useState<User>();
@@ -122,6 +124,11 @@ const Home: React.FC<Props> = props => {
 
   const resetSearch = () => {
     setSearchUsername('');
+  };
+
+  const logout = () => {
+    authUserReset();
+    navigation.replace('Auth');
   };
 
   useEffect(() => {
@@ -212,7 +219,7 @@ const Home: React.FC<Props> = props => {
         <MenuChoose
           toggleMenuHandler={toggleMenuHandler}
           search={searchHandler}
-          exit={() => {}}
+          exit={logout}
         />
       )}
     </Container>
@@ -242,7 +249,7 @@ const mapStateToProps = (state: ApplicationState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
-  bindActionCreators(GymActions, dispatch);
+  bindActionCreators({...AuthActions, ...GymActions}, dispatch);
 
 export default connect(
   mapStateToProps,

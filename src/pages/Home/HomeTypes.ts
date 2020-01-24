@@ -36,4 +36,5 @@ export interface DispatchProps {
   editUserReset: () => void;
 
   navigation: NavigationStackProp;
+  authUserReset: () => void;
 }

@@ -15,3 +15,14 @@ export interface AddExercise {
   time?: number;
   obs?: string;
 }
+
+export interface AuthUser {
+  username: string;
+  password: string;
+  id: string;
+}
+
+export interface AuthLogin {
+  username: string;
+  password: string;
+}
