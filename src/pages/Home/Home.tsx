@@ -20,6 +20,7 @@ import InfoDialog from 'components/Dialogs/Info/InfoDialog';
 import ShareDatas from 'services/ShareDatas';
 import MenuChoose from './MenuChoose/MenuChoose';
 import Search from './Search/Search';
+import ConfirmDialog from 'components/Dialogs/Confirm/ConfirmDialog';
 
 type Props = StateProps & DispatchProps;
 
@@ -56,6 +57,7 @@ const Home: React.FC<Props> = props => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const [search, setSearch] = useState(false);
   const [searchUsername, setSearchUsername] = useState('');
+  const [logouToggle, setLogoutToggle] = useState(false);
 
   const addUserNavigate = () => {
     closeSearch();
@@ -112,8 +114,10 @@ const Home: React.FC<Props> = props => {
   };
 
   const getUsers = () => {
-    return usersData.filter((user: User) =>
-      user.username.toLocaleLowerCase().startsWith(searchUsername),
+    return usersData.filter(
+      (user: User) =>
+        user.username.toLocaleLowerCase().startsWith(searchUsername) &&
+        user.perfil !== 'adm',
     );
   };
 
@@ -126,9 +130,16 @@ const Home: React.FC<Props> = props => {
     setSearchUsername('');
   };
 
-  const logout = () => {
-    authUserReset();
-    navigation.replace('Auth');
+  const logoutToggleHandler = () => {
+    setLogoutToggle(!logouToggle);
+  };
+
+  const logout = (op: boolean) => {
+    if (op) {
+      authUserReset();
+      navigation.replace('Auth');
+    }
+    logoutToggleHandler();
   };
 
   useEffect(() => {
@@ -219,8 +230,11 @@ const Home: React.FC<Props> = props => {
         <MenuChoose
           toggleMenuHandler={toggleMenuHandler}
           search={searchHandler}
-          exit={logout}
+          exit={() => logoutToggleHandler()}
         />
+      )}
+      {logouToggle && (
+        <ConfirmDialog title="Logout" text="Desejar sair?" action={logout} />
       )}
     </Container>
   );

@@ -45,7 +45,6 @@ const UserFormModal: React.FC<Props> = props => {
   }, [actionUserReset, toggleModalUser]);
 
   const addUserHandler = (student: CreateUser) => {
-    console.log(student);
     actionUserRequest(student);
   };
 
@@ -90,17 +89,6 @@ const UserFormModal: React.FC<Props> = props => {
           </Forms>
         </Content>
         {actionUserLoading && <LoadingDialog title={user ? 'Editar Usuário' : 'Adicionando Usuário'} />}
-        {actionUserErr ? (
-        <InfoDialog
-          title="Error"
-          text={
-            actionUserMsg
-          }
-          action={() =>
-            closeArrowLeft()
-          }
-        />
-      ) : null}
       </Container>
     </Modal>
   );

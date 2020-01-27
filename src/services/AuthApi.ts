@@ -23,7 +23,6 @@ interface ResErrorData {
 class AuthApi {
   static login = async (authLogin: AuthLogin): Promise<AuthUser> => {
     try {
-      console.log(authLogin);
       const res: AxiosResponse<ResData> = await axios.post(
         `${URL}/auth/loginadm`,
         {...authLogin},
@@ -37,7 +36,6 @@ class AuthApi {
       return authUser;
     } catch (error) {
       const err: ResErrorData = error;
-      console.log(err.response.data.data);
       throw err.response === undefined
         ? ERRORS.errServer
         : err.response.data.data;

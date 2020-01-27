@@ -42,7 +42,6 @@ function* usersRequestLoad() {
     const users: User[] = yield call(GymApi.getUsers);
     yield put(userSuccess(users));
   } catch (err) {
-    console.log(err);
     yield put(userError(FormatErrors.format(err)));
   }
 }
