@@ -1,6 +1,6 @@
 import {createStore, applyMiddleware, Store} from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import {composeWithDevTools} from 'redux-devtools-extension';
+// import {composeWithDevTools} from 'redux-devtools-extension';
 // import logger from 'redux-logger';
 import {GymState} from './modules/gym/types';
 
@@ -29,10 +29,11 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store: Store<ApplicationState> = createStore(
   persistedReducer,
-  composeWithDevTools(
-    applyMiddleware(sagaMiddleware),
-    // other store enhancers if any
-  ),
+  applyMiddleware(sagaMiddleware),
+  // composeWithDevTools(
+  //   applyMiddleware(sagaMiddleware),
+  //   // other store enhancers if any
+  // ),
 );
 
 let persistor = persistStore(store);

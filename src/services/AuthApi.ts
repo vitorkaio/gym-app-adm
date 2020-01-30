@@ -2,7 +2,8 @@ import axios, {AxiosResponse} from 'axios';
 import {AuthLogin, AuthUser} from 'models/TypesAux';
 import {ERRORS} from './FormatErrors';
 
-const URL: string = 'http://192.168.1.112:3333';
+// const URL: string = 'http://192.168.1.112:3333';
+const URL: string = 'https://intense-hamlet-46083.herokuapp.com';
 
 interface ResData {
   msg: string;
