@@ -7,70 +7,71 @@
 * Redux
 * ...
 
+
 ## Tela de Login
-![Login](/imgs/login.png)
+<img src="imgs/login.png" width="50%" height="50%">
 
 <br />
 
 ## Home
-![Login](/imgs/home.png)
+<img src="imgs/home.png" width="50%" height="50%">
 
 <br />
 
 ## Home Menu
-![Login](/imgs/home_menu.png)
+<img src="imgs/home_menu.png" width="50%" height="50%">
 
 ## Pesquisar
-![Login](/imgs/search.png)
+<img src="imgs/search.png" width="50%" height="50%">
 
 ## Sair
-![Login](/imgs/logout.png)
+<img src="imgs/logout.png" width="50%" height="50%">
 
 <br />
 
 ## Adicionar novo aluno
-![Login](/imgs/user_add.png)
+<img src="imgs/user_add.png" width="50%" height="50%">
 
 <br />
 
 ## Home - Ações
-![Login](/imgs/user_actions.png)
+<img src="imgs/user_actions.png" width="50%" height="50%">
 
-![Login](/imgs/user_actions_edit.png)
+<img src="imgs/user_actions_edit.png" width="50%" height="50%">
 
-![Login](/imgs/user_actions_delete.png)
+<img src="imgs/user_actions_delete.png" width="50%" height="50%">
 
 <br />
 
 ## Editar usuário
-![Login](/imgs/user_edit.png)
+<img src="imgs/user_edit.png" width="50%" height="50%">
 
 <br />
 
 ## Treinos
-![Login](/imgs/trainings.png)
+<img src="imgs/trainings.png" width="50%" height="50%">
 
 <br />
 
 ## Adicionar Treino
-![Login](/imgs/training_add.png)
+<img src="imgs/training_add.png" width="50%" height="50%">
 
 <br />
 
 ## Treino - Ações
-![Login](/imgs/training_actions.png)
+<img src="imgs/training_actions.png" width="50%" height="50%">
 
 <br />
 
 ## Exercícios
-![Login](/imgs/exercises.png)
+<img src="imgs/exercises.png" width="50%" height="50%">
 
 <br />
 
 ## Exercícios - Ações
-![Login](/imgs/exercises_actions.png)
+<img src="imgs/exercises_actions.png" width="50%" height="50%">
 
 <br />
 
 ## Adicionar rxercício
-![Login](/imgs/exercise_add.png)
+<img src="imgs/exercise_add.png" width="50%" height="50%">
